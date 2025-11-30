@@ -1,6 +1,6 @@
 {
-    "name": "calculadora_madeira",
-    "short_name": "calculadora_madeira",
+    "name": "calculadora_custo",
+    "short_name": "calculadora_custo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
