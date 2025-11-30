@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcenaria PRO - Calculadora de Custo Hora</title>
+    <title>Calculadora de Custo Hora - Marcenaria PRO</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Ícones -->
@@ -17,12 +17,6 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Ajuste para scrollbar dark */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
-        
         .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(148, 163, 184, 0.1); }
     </style>
 </head>
@@ -32,17 +26,21 @@
     <nav class="fixed w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2">
+                <!-- Logo Clicável (Leva para a Home) -->
+                <a href="../" class="flex items-center gap-2 hover:opacity-80 transition">
                     <div class="bg-amber-600/20 p-2 rounded-xl border border-amber-500/20">
                         <i data-lucide="monitor" class="text-amber-500 w-6 h-6"></i>
                     </div>
                     <span class="text-2xl font-bold tracking-tight text-white">Marcenaria<span class="text-amber-500">PRO</span></span>
-                </div>
+                </a>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                   <a href="#calculadora" class="bg-amber-600 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-amber-600/20 hover:bg-amber-500 hover:scale-105 transition transform">
-                        Calcular Agora
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="../" class="text-slate-400 hover:text-white font-medium transition flex items-center gap-2">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar ao Site
+                    </a>
+                    <a href="../#precos" class="bg-slate-800 border border-slate-700 text-white px-5 py-2 rounded-lg font-bold hover:bg-slate-700 transition">
+                        Ver Planos
                     </a>
                 </div>
             </div>
@@ -50,28 +48,27 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="relative pt-32 pb-20 lg:pt-40 lg:pb-20 overflow-hidden bg-slate-950">
+    <header class="relative pt-32 pb-20 lg:pt-40 lg:pb-20 overflow-hidden bg-slate-950 flex-grow">
         <!-- Background Gradient Effect -->
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-600/10 rounded-full filter blur-[120px] pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full filter blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10 animate-fade-in-up">
             <span class="inline-block py-1 px-3 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold mb-6 border border-amber-500/20">
-                FERRAMENTA GRATUITA PARA MARCENEIROS
+                FERRAMENTA GRATUITA
             </span>
             <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight tracking-tight mb-6">
                 Sabe quanto custa <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">ligar a sua serra?</span>
             </h1>
             
-            <!-- ONE-LINER INSERIDA AQUI -->
             <div class="bg-slate-900/50 border-l-4 border-amber-500 p-4 mb-8 max-w-3xl mx-auto text-left rounded-r-lg">
                 <p class="text-slate-300 text-lg font-medium italic">
-                    "Pare de pagar para trabalhar. O Marcenaria PRO calcula o seu lucro exato antes de fechar o negócio, transformando a sua oficina numa empresa que dá dinheiro."
+                    "Pare de pagar para trabalhar. Descubra seu custo hora agora."
                 </p>
             </div>
 
             <p class="text-slate-400 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-                90% dos marceneiros erram esse cálculo básico. Descubra em 30 segundos quanto vale realmente a sua hora de trabalho.
+                Preencha os dados abaixo para descobrir o valor mínimo da sua hora técnica.
             </p>
         </div>
 
@@ -141,16 +138,21 @@
                             <div>
                                 <h4 class="text-white font-bold text-lg mb-1">Cuidado!</h4>
                                 <p class="text-sm text-slate-400 leading-relaxed">
-                                    Esse valor é só o custo operacional. Ele <strong>NÃO</strong> inclui materiais, margem de perda e as taxas da maquininha de cartão. Se você cobrar só isso, vai pagar para trabalhar.
+                                    Esse valor é só o custo operacional. Ele <strong>NÃO</strong> inclui materiais, margem de perda e as taxas da maquininha.
                                 </p>
                             </div>
                         </div>
                         
-                        <a id="whatsappLink" href="#" target="_blank" class="flex items-center justify-center gap-3 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition shadow-lg hover:shadow-emerald-900/30 group">
+                        <!-- CTA Principal -->
+                        <a id="whatsappLink" href="#" target="_blank" class="flex items-center justify-center gap-3 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition shadow-lg hover:shadow-emerald-900/30 mb-4">
                             <i class="fa-brands fa-whatsapp text-2xl"></i> 
-                            <span>Quero Automatizar Meus Orçamentos</span>
+                            <span>Quero Automatizar Tudo</span>
                         </a>
-                         <p class="text-xs text-slate-500 mt-3">Fale diretamente com nosso especialista no WhatsApp.</p>
+
+                        <!-- NOVO: CTA Secundário para a Landing Page -->
+                        <a href="../#precos" class="block w-full text-center text-amber-500 hover:text-amber-400 font-semibold py-2 transition">
+                            Ver o Sistema Completo &rarr;
+                        </a>
                     </div>
                 </div>
 
@@ -166,45 +168,35 @@
 
     <!-- LOGIC SCRIPT -->
     <script>
-        // Inicializa ícones Lucide
         lucide.createIcons();
 
         function calcular() {
-            // Pegar valores
             const salario = parseFloat(document.getElementById('salario').value) || 0;
             const dias = parseFloat(document.getElementById('dias').value) || 0;
             const horas = parseFloat(document.getElementById('horas').value) || 0;
             const custos = parseFloat(document.getElementById('custos').value) || 0;
 
-            // Validar para não dividir por zero
             if(dias === 0 || horas === 0) {
                 alert("Por favor, preencha os dias e horas trabalhadas corretamente.");
                 return;
             }
 
-            // Fórmula: (Salário + Custos) / (Dias * 4.33 semanas * Horas)
-            // 4.33 é a média de semanas no mês
             const horasMensais = dias * 4.333 * horas;
             const custoTotal = salario + custos;
             const valorHora = custoTotal / horasMensais;
 
-            // Exibir Resultado
             const resultadoDiv = document.getElementById('resultado');
             const valorHoraDiv = document.getElementById('valorHora');
             
-            // Formatar para moeda Brasileira
             valorHoraDiv.innerText = valorHora.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             
-            // Remover classe hidden e aplicar animação
             resultadoDiv.classList.remove('hidden');
             
-            // Configurar Link do WhatsApp com a mensagem personalizada
-            // ATENÇÃO: EDITE O NÚMERO ABAIXO
+            // Link dinâmico do WhatsApp
             const phone = "5535997086240"; 
-            const msg = `Olá! Usei a calculadora e meu custo hora deu ${valorHora.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}. Quero conhecer o Marcenaria PRO para automatizar tudo e garantir meu lucro.`;
+            const msg = `Olá! Usei a calculadora e meu custo hora deu ${valorHora.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}. Quero conhecer o Marcenaria PRO para automatizar tudo.`;
             document.getElementById('whatsappLink').href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
 
-            // Scroll suave até o resultado
             setTimeout(() => {
                 resultadoDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
