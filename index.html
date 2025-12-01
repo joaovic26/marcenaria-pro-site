@@ -57,12 +57,9 @@
                     <span class="text-2xl font-bold tracking-tight text-white">Marcenaria<span class="text-brand-primary">PRO</span></span>
                 </div>
                 
-                <!-- Desktop Menu -->
+                <!-- Desktop Menu (AJUSTE 1: Apenas botão Acessar Agora) -->
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#funcionalidades" class="text-slate-400 hover:text-white font-medium transition duration-200">Funcionalidades</a>
-                    <a href="#como-funciona" class="text-slate-400 hover:text-white font-medium transition duration-200">A Lógica</a>
-                    <a href="#depoimentos" class="text-slate-400 hover:text-white font-medium transition duration-200">Depoimentos</a>
-                    <a href="#precos" class="bg-brand-primary text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-amber-600/20 hover:bg-brand-accent hover:scale-105 transition transform">
+                    <a href="https://app.marcenariaproapp.com.br//" class="bg-brand-primary text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-amber-600/20 hover:bg-brand-accent hover:scale-105 transition transform">
                         Acessar Agora
                     </a>
                 </div>
@@ -70,21 +67,20 @@
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
                     <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-slate-400 hover:text-white focus:outline-none">
-                        <i data-lucide="menu" class="w-7 h-7"></i>
+                        <i class="fas fa-bars w-7 h-7"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
+        <!-- Mobile Menu (AJUSTE 1: Consistência no mobile) -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 p-4 space-y-4 shadow-xl">
-            <a href="#funcionalidades" class="block text-slate-400 font-medium hover:text-brand-primary">Funcionalidades</a>
-            <a href="#como-funciona" class="block text-slate-400 font-medium hover:text-brand-primary">A Lógica</a>
-            <a href="#precos" class="block w-full bg-brand-primary text-white px-6 py-3 rounded-lg font-bold text-center">Acessar Agora</a>
+            <a href="https://app.marcenariaproapp.com.br//" class="block w-full bg-brand-primary text-white px-6 py-3 rounded-lg font-bold text-center">Acessar Agora</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="bg-brand-dark text-white py-16 px-4 relative overflow-hidden">
+    <!-- AJUSTE 2: Alterado py-16 para pt-32 pb-16 para descer o conteúdo e não ficar escondido pelo menu -->
+    <header class="bg-brand-dark text-white pt-32 pb-16 px-4 relative overflow-hidden">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="inline-block bg-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-6 shadow-lg shadow-amber-900/50">
                 Ferramenta de Diagnóstico Gratuito
@@ -185,25 +181,36 @@
                     </div>
 
                     <!-- Área Borrada -->
-                    <div class="relative mt-4">
-                        <div class="blur-content space-y-4 p-4 bg-gray-50 rounded-xl">
-                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <!-- AJUSTE 3: Adicionado min-h-[600px] para garantir que o formulário flutuante (absolute) caiba inteiro sem ser cortado -->
+                    <div class="relative mt-4 min-h-[600px] flex flex-col justify-center bg-gray-50 rounded-xl overflow-hidden">
+                        
+                        <!-- Conteúdo de fundo (para dar a impressão de relatório) -->
+                        <div class="blur-content space-y-6 p-6 absolute inset-0 w-full h-full">
+                            <div class="flex justify-between items-center border-b border-gray-200 py-4">
                                 <span class="text-gray-600">Custo Real (Taxas + 4.33)</span>
                                 <span class="font-mono font-bold">R$ 4.250,00</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                            <div class="flex justify-between items-center border-b border-gray-200 py-4">
                                 <span class="text-gray-600">Preço Mínimo (Break-even)</span>
                                 <span class="font-mono font-bold">R$ 5.800,00</span>
                             </div>
-                            <div class="flex justify-between items-center py-2 bg-green-100 p-2 rounded">
+                            <div class="flex justify-between items-center border-b border-gray-200 py-4">
+                                <span class="text-gray-600">Margem Líquida Real</span>
+                                <span class="font-mono font-bold text-red-500">- 4%</span>
+                            </div>
+                             <div class="flex justify-between items-center border-b border-gray-200 py-4">
+                                <span class="text-gray-600">Custo de Oportunidade</span>
+                                <span class="font-mono font-bold">R$ 1.200,00</span>
+                            </div>
+                            <div class="flex justify-between items-center py-4 bg-green-100 p-2 rounded">
                                 <span class="text-green-800 font-bold">PREÇO IDEAL (CORRIGIDO)</span>
                                 <span class="font-mono font-bold text-green-800 text-xl">R$ 6.950,00</span>
                             </div>
                         </div>
 
-                        <!-- O Gate (Formulário de Captura) -->
-                        <div class="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-[2px]">
-                            <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full border-2 border-brand-primary mx-4 transform scale-100 hover:scale-[1.01] transition">
+                        <!-- O Gate (Formulário de Captura) - Agora com espaço garantido pelo container pai -->
+                        <div class="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-[4px]">
+                            <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full border-2 border-brand-primary mx-4 transform scale-100 hover:scale-[1.01] transition my-4">
                                 <div class="w-12 h-12 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                                     <i class="fas fa-lock text-2xl text-brand-primary"></i>
                                 </div>
@@ -211,7 +218,7 @@
                                 <p class="text-gray-600 mb-6 text-sm leading-relaxed">
                                     Detectamos o erro no seu cálculo. Digite seu contato para liberar o <strong>Preço Corrigido</strong> e receber o acesso à correção.
                                 </p>
-                                <form id="leadForm" class="space-y-3">
+                                <form id="leadForm" class="space-y-4">
                                     <input type="text" id="leadName" placeholder="Seu Nome" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
                                     <input type="email" id="leadEmail" placeholder="Seu melhor E-mail" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
                                     <input type="tel" id="leadPhone" placeholder="WhatsApp (DDD + Número)" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
