@@ -3,375 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcenaria PRO - Otimize sua Produção</title>
-    <!-- Tailwind CSS -->
+    <title>Marcenaria PRO | Calculadora de Lucro Real</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ícones -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out; }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Ajuste para scrollbar dark */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        .blur-content { filter: blur(6px); user-select: none; pointer-events: none; }
+        .hidden-section { display: none; }
+        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Loading Overlay */
+        .loader { border-top-color: #d97706; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a', // Slate 900
+                            primary: '#d97706', // Amber 600
+                            accent: '#b45309', // Amber 700
+                            light: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-slate-950 text-slate-200 selection:bg-amber-500/30 selection:text-amber-200">
+<body class="bg-gray-50 text-slate-800">
 
-    <!-- LOADING OVERLAY -->
-    <div id="loading-overlay" class="hidden fixed inset-0 bg-black/80 z-[60] flex items-center justify-center backdrop-blur-sm transition-opacity">
-        <div class="bg-slate-900 p-8 rounded-2xl flex flex-col items-center shadow-2xl animate-bounce-slow border border-slate-700">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-slate-700 border-t-amber-500 mb-4"></div>
-            <p class="font-bold text-lg text-white">Conectando ao Mercado Pago...</p>
-            <p class="text-sm text-slate-400">Aguarde um momento</p>
+    <!-- LOADING OVERLAY DO PAGAMENTO -->
+    <div id="payment-overlay" class="hidden fixed inset-0 bg-black/80 z-[60] flex items-center justify-center backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-2xl flex flex-col items-center shadow-2xl">
+            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+            <p class="font-bold text-lg text-slate-800">Conectando ao Mercado Pago...</p>
+            <p class="text-sm text-slate-500">Preparando seu acesso vitalício.</p>
         </div>
     </div>
 
-    <!-- NAV -->
-    <nav class="fixed w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-2">
-                    <div class="bg-amber-600/20 p-2 rounded-xl border border-amber-500/20">
-                        <i data-lucide="monitor" class="text-amber-500 w-6 h-6"></i>
-                    </div>
-                    <span class="text-2xl font-bold tracking-tight text-white">Marcenaria<span class="text-amber-500">PRO</span></span>
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#funcionalidades" class="text-slate-400 hover:text-white font-medium transition duration-200">Funcionalidades</a>
-                    <a href="#como-funciona" class="text-slate-400 hover:text-white font-medium transition duration-200">A Lógica</a>
-                    <a href="#depoimentos" class="text-slate-400 hover:text-white font-medium transition duration-200">Depoimentos</a>
-                    <a href="#precos" class="bg-amber-600 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-amber-600/20 hover:bg-amber-500 hover:scale-105 transition transform">
-                        Acessar Agora
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-slate-400 hover:text-white focus:outline-none">
-                        <i data-lucide="menu" class="w-7 h-7"></i>
-                    </button>
-                </div>
+    <!-- HERO SECTION -->
+    <header class="bg-brand-dark text-white py-16 px-4 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-block bg-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-6 shadow-lg shadow-amber-900/50">
+                Ferramenta de Diagnóstico Gratuito
             </div>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Você está Lucrando ou apenas <span class="text-brand-primary">Trocando Dinheiro</span>?
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-8 font-light max-w-3xl mx-auto">
+                A maioria dos marceneiros paga para trabalhar e não sabe. As taxas invisíveis e o "Erro das 4.33 Semanas" estão comendo sua margem.
+            </p>
+            <p class="text-lg text-white mb-10 bg-white/10 inline-block px-6 py-3 rounded-xl backdrop-blur-sm border border-white/10">
+                Descubra em 2 minutos o <strong>Lucro Real</strong> do seu último orçamento.
+            </p>
+            <a href="#calculadora" class="bg-brand-primary hover:bg-brand-accent text-white font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:scale-105 duration-200 text-lg inline-flex items-center gap-2">
+                <i class="fas fa-calculator"></i> Fazer Diagnóstico Agora
+            </a>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 p-4 space-y-4 shadow-xl">
-            <a href="#funcionalidades" class="block text-slate-400 font-medium hover:text-amber-500">Funcionalidades</a>
-            <a href="#como-funciona" class="block text-slate-400 font-medium hover:text-amber-500">A Lógica</a>
-            <a href="#precos" class="block w-full bg-amber-600 text-white px-6 py-3 rounded-lg font-bold text-center">Acessar Agora</a>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-950">
-        <!-- Background Gradient Effect -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-600/10 rounded-full filter blur-[120px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full filter blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                
-                <!-- Copy -->
-                <div class="text-center lg:text-left space-y-8 animate-fade-in-up">
-                    <div class="inline-flex items-center gap-2 bg-slate-900/50 border border-slate-800 text-amber-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-wide mb-4 shadow-sm">
-                        <span class="relative flex h-2 w-2">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-                        </span>
-                        A FERRAMENTA Nº 1 DO MARCENEIRO MODERNO
-                    </div>
-                    <h1 class="text-5xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight">
-                        Pare de pagar para <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600">trabalhar.</span>
-                    </h1>
-                    <p class="text-lg text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                        O único aplicativo que calcula seus orçamentos com precisão milimétrica, garante seu salário e cobre os custos da maquininha automaticamente.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <!-- LINK DO SEU APP AQUI -->
-                        <a href="https://joaovic26.github.io/marcenaria-app/" target="_blank" class="flex items-center justify-center gap-3 bg-amber-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-amber-500 transition shadow-lg shadow-amber-900/20 hover:-translate-y-1">
-                            <i data-lucide="globe" class="w-6 h-6"></i>
-                            <span>Usar Versão Web</span>
-                        </a>
-                        <a href="#precos" class="flex items-center justify-center gap-3 bg-slate-800 text-white border border-slate-700 px-8 py-4 rounded-xl font-bold hover:border-amber-500/50 hover:bg-slate-700 transition">
-                            <i data-lucide="file-text" class="w-6 h-6"></i>
-                            <span>Ver Planos</span>
-                        </a>
-                    </div>
-                    
-                    <div class="pt-6 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-8 text-sm text-slate-500 font-medium">
-                        <div class="flex items-center gap-2"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5"></i> Windows</div>
-                        <div class="flex items-center gap-2"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5"></i> Mac & Linux</div>
-                        <div class="flex items-center gap-2"><i data-lucide="zap" class="text-amber-500 w-5 h-5"></i> Acesso Imediato</div>
-                    </div>
-                </div>
-
-                <!-- Visual Mockup (Dark UI Style) -->
-                <div class="relative mx-auto lg:ml-auto w-full max-w-lg perspective-1000">
-                    <div class="relative bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl z-10 transform rotate-y-6 hover:rotate-y-0 transition duration-700 ease-out overflow-hidden ring-1 ring-white/10">
-                        <!-- Browser Header -->
-                        <div class="bg-slate-950 px-4 py-3 flex items-center gap-2 border-b border-slate-800">
-                            <div class="flex gap-1.5">
-                                <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
-                            </div>
-                            <div class="ml-4 bg-slate-800/50 px-4 py-1.5 rounded-md text-xs text-slate-500 flex-1 text-center font-mono border border-slate-800">marcenariapro.app</div>
-                        </div>
-                        <!-- Screen Content Dark -->
-                        <div class="bg-slate-900 h-[380px] w-full flex flex-col overflow-hidden relative">
-                            <div class="bg-slate-800/80 h-16 w-full flex items-center justify-between px-6 border-b border-slate-700/50">
-                                <div class="text-white font-bold text-lg flex items-center gap-3">
-                                    <div class="bg-amber-500/20 p-1.5 rounded-lg"><i data-lucide="monitor" class="w-5 h-5 text-amber-500"></i></div>
-                                    Resumo
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-orange-600"></div>
-                                </div>
-                            </div>
-                            <div class="p-6 grid grid-cols-2 gap-4 h-full bg-slate-900 overflow-hidden">
-                                <div class="col-span-2 bg-gradient-to-br from-slate-800 to-slate-800/50 p-6 rounded-2xl border border-slate-700/50 relative overflow-hidden group">
-                                   <div class="absolute right-0 top-0 p-4 opacity-10 group-hover:opacity-20 transition"><i data-lucide="wallet" class="w-16 h-16 text-white"></i></div>
-                                   <p class="text-sm text-slate-400 font-medium">Faturamento Mensal</p>
-                                   <p class="text-3xl font-bold text-white mt-2 tracking-tight">R$ 14.250,00</p>
-                                </div>
-                                <div class="bg-emerald-950/30 p-4 rounded-2xl border border-emerald-500/20 relative overflow-hidden">
-                                  <div class="absolute inset-0 bg-emerald-500/5"></div>
-                                  <p class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">Lucro Real</p>
-                                  <p class="text-emerald-100 text-xl font-bold">R$ 4.580</p>
-                                </div>
-                                <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50 flex flex-col justify-center items-center text-slate-400 hover:bg-slate-800 transition cursor-pointer">
-                                  <i data-lucide="bar-chart-2" class="w-8 h-8 mb-2 text-amber-500"></i>
-                                  <span class="text-xs font-medium">Analytics</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Glow effect under laptop -->
-                    <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-12 bg-amber-500/20 filter blur-3xl rounded-full"></div>
-                </div>
-
-            </div>
-        </div>
+        
+        <!-- Background Texture -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/10 rounded-full filter blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full filter blur-[100px] pointer-events-none"></div>
     </header>
 
-    <!-- PROBLEM SECTION -->
-    <section class="py-24 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6">
-                Para onde está indo o seu dinheiro?
-            </h2>
-            <p class="text-xl text-slate-400 mb-16 max-w-2xl mx-auto">
-                A maioria erra na precificação ao esquecer os custos invisíveis. Se você apenas "chuta" o preço, <strong class="text-red-400 font-medium">você está pagando para trabalhar.</strong>
-            </p>
-            
-            <div class="grid sm:grid-cols-3 gap-8">
-                <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-red-500/30 hover:bg-slate-800 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-6 border border-slate-700 group-hover:border-red-500/20 group-hover:shadow-[0_0_20px_-5px_rgba(239,68,68,0.3)] transition">
-                        <i data-lucide="credit-card" class="w-7 h-7 text-red-400"></i>
+    <!-- CALCULADORA SECTION -->
+    <section id="calculadora" class="py-16 px-4 -mt-10 relative z-20">
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+            <div class="bg-gray-50 p-6 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 text-center">
+                    <i class="fas fa-search-dollar text-brand-primary mr-2"></i> Analisar Orçamento Recente
+                </h2>
+                <p class="text-center text-gray-500 text-sm mt-2">Insira dados reais de um projeto. Vamos revelar a verdade.</p>
+            </div>
+
+            <div class="p-8">
+                <form id="calcForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Inputs -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Custo Total de Materiais (R$)</label>
+                            <input type="number" id="materiais" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 2500" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Horas Estimadas</label>
+                            <span class="text-xs text-gray-500 float-right font-normal">Produção + Instalação</span>
+                            <input type="number" id="horas" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 40" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Margem de Lucro Desejada (%)</label>
+                            <input type="number" id="margem" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 30" value="30" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Taxa da Maquininha/Imposto (%)</label>
+                            <input type="number" id="taxas" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 12 (para 10x)" value="10" required>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-3">Taxas Ocultas</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Você parcela em 12x e a taxa de 15% come todo o seu lucro silenciosamente.</p>
-                </div>
-                <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-amber-500/30 hover:bg-slate-800 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-6 border border-slate-700 group-hover:border-amber-500/20 group-hover:shadow-[0_0_20px_-5px_rgba(245,158,11,0.3)] transition">
-                        <i data-lucide="clock" class="w-7 h-7 text-amber-400"></i>
+
+                    <!-- Pergunta Chave -->
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <label class="block text-sm font-bold text-slate-800 mb-1">Quanto você acha que custa sua hora? (R$)</label>
+                        <p class="text-xs text-slate-500 mb-2">A média de mercado para uma oficina pequena é R$ 35,00 (considerando aluguel, luz, pro-labore).</p>
+                        <input type="number" id="valorHora" class="w-full px-4 py-3 rounded border border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" value="35">
                     </div>
-                    <h3 class="font-bold text-lg text-white mb-3">Hora de Trabalho</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Quanto custa sua hora? Se não considerar aluguel e luz, a conta não fecha.</p>
-                </div>
-                <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-blue-500/30 hover:bg-slate-800 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-6 border border-slate-700 group-hover:border-blue-500/20 group-hover:shadow-[0_0_20px_-5px_rgba(59,130,246,0.3)] transition">
-                        <i data-lucide="trending-down" class="w-7 h-7 text-blue-400"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-white mb-3">Margem de Perda</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Esqueceu de calcular os 10% de quebra do material? Esse custo sai direto do seu bolso.</p>
-                </div>
+
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-lg transform hover:-translate-y-1">
+                        CALCULAR A VERDADE <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
 
-    <!-- SOLUTION SECTION -->
-    <section id="como-funciona" class="py-24 bg-slate-950 relative overflow-hidden">
-        <!-- Lines Grid Background -->
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-20">
-                <h2 class="text-sm font-bold text-amber-500 tracking-widest uppercase mb-3">Método Exclusivo</h2>
-                <h3 class="text-3xl lg:text-4xl font-bold text-white">Como garantimos seu lucro</h3>
+    <!-- RESULTADO PARCIAL + LOCK -->
+    <section id="resultadoLock" class="py-10 px-4 hidden-section fade-in bg-white">
+        <div class="max-w-3xl mx-auto">
+            <!-- Alerta -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r shadow-sm mb-8 flex items-start gap-4">
+                <i class="fas fa-exclamation-triangle text-red-500 text-2xl mt-1"></i>
+                <div>
+                    <h3 class="text-lg font-bold text-red-800">Alerta Financeiro Detectado</h3>
+                    <p class="text-red-700 mt-1 text-sm">Seus custos invisíveis estão maiores do que o previsto. Você corre risco de pagar para trabalhar neste projeto.</p>
+                </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="space-y-12">
-                    <div class="flex gap-6 group">
-                        <div class="flex-shrink-0 bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center text-amber-500 font-bold text-2xl border border-slate-800 group-hover:border-amber-500/50 group-hover:text-amber-400 transition shadow-lg">1</div>
-                        <div>
-                            <h4 class="text-xl font-bold text-white mb-2">Cálculo Real do Valor Hora</h4>
-                            <p class="text-slate-400 leading-relaxed">Não usamos 4 semanas. Usamos a constante contábil de <strong class="text-amber-400">4.33 semanas/mês</strong>. Isso distribui seus custos fixos com precisão científica.</p>
-                        </div>
-                    </div>
+            <!-- Card de Resultados -->
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 relative overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4">Análise Preliminar</h3>
                     
-                    <div class="flex gap-6 group">
-                        <div class="flex-shrink-0 bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center text-amber-500 font-bold text-2xl border border-slate-800 group-hover:border-amber-500/50 group-hover:text-amber-400 transition shadow-lg">2</div>
-                        <div>
-                            <h4 class="text-xl font-bold text-white mb-2">O Almoxarifado Inteligente</h4>
-                            <p class="text-slate-400 leading-relaxed">Cadastre seus materiais uma única vez. O app converte automaticamente o preço da chapa para m² ou m³, facilitando orçamentos.</p>
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p class="text-xs text-gray-500 font-bold uppercase">Preço "Conta de Padaria"</p>
+                            <p class="text-2xl font-bold text-gray-800" id="displayPrecoPadaria">R$ 0,00</p>
+                        </div>
+                        <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                            <p class="text-xs text-red-600 font-bold uppercase">Dinheiro Deixado na Mesa</p>
+                            <p class="text-2xl font-bold text-red-600" id="displayPrejuizo">R$ 0,00</p>
                         </div>
                     </div>
 
-                    <div class="flex gap-6 group">
-                        <div class="flex-shrink-0 bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center text-amber-500 font-bold text-2xl border border-slate-800 group-hover:border-amber-500/50 group-hover:text-amber-400 transition shadow-lg">3</div>
-                        <div>
-                            <h4 class="text-xl font-bold text-white mb-2">Cálculo Reverso de Taxas</h4>
-                            <p class="text-slate-400 leading-relaxed">O app faz a conta inversa e te diz: <em class="bg-amber-900/30 text-amber-200 px-2 py-0.5 rounded border border-amber-900/50 font-medium not-italic">"Cobre R$ X para receber líquido o valor Y"</em>.</p>
+                    <!-- Área Borrada -->
+                    <div class="relative mt-4">
+                        <div class="blur-content space-y-4 p-4 bg-gray-50 rounded-xl">
+                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                                <span class="text-gray-600">Custo Real (Taxas + 4.33)</span>
+                                <span class="font-mono font-bold">R$ 4.250,00</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                                <span class="text-gray-600">Preço Mínimo (Break-even)</span>
+                                <span class="font-mono font-bold">R$ 5.800,00</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 bg-green-100 p-2 rounded">
+                                <span class="text-green-800 font-bold">PREÇO IDEAL (CORRIGIDO)</span>
+                                <span class="font-mono font-bold text-green-800 text-xl">R$ 6.950,00</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Illustration Box -->
-                <div class="relative bg-slate-900/50 rounded-3xl p-8 lg:p-12 text-white border border-slate-800 shadow-2xl backdrop-blur-sm overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full filter blur-[80px] group-hover:bg-amber-500/20 transition duration-1000"></div>
-                    <div class="relative z-10">
-                        <div class="bg-slate-800/50 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 border border-slate-700 shadow-inner">
-                            <i data-lucide="shield-check" class="w-8 h-8 text-amber-400"></i>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-4">Segurança Total</h3>
-                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
-                            Seus dados ficam salvos na nuvem do Google (Firestore). Trocou de celular ou formatou o computador? Basta fazer login e tudo estará lá.
-                        </p>
-                        <div class="flex items-center gap-6 text-sm text-slate-300 font-medium">
-                            <div class="flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4 text-emerald-400"></i> Criptografia SSL</div>
-                            <div class="flex items-center gap-2"><i data-lucide="server" class="w-4 h-4 text-emerald-400"></i> Backup Automático</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURES GRID -->
-    <section id="funcionalidades" class="py-24 bg-slate-900 text-white relative border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-20">
-                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Tudo o que você precisa</h2>
-                <p class="text-slate-400 max-w-2xl mx-auto text-lg">Centralize sua gestão e profissionalize seu atendimento.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Feature 1 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="globe" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Versão Web</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Acesse de qualquer navegador, sem instalar nada.</p>
-                </div>
-                <!-- Feature 2 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="laptop" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Desktop Nativo</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Windows, Mac & Linux. Ideal para o escritório.</p>
-                </div>
-                <!-- Feature 3 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="file-text" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Gerador de PDF</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Orçamentos com sua logo enviados na hora.</p>
-                </div>
-                <!-- Feature 4 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="users" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Cadastro de Clientes</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Histórico organizado e sempre acessível.</p>
-                </div>
-                <!-- Feature 5 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="cloud" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Sincronização Nuvem</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Comece no PC, termine no tablet.</p>
-                </div>
-                <!-- Feature 6 -->
-                <div class="bg-slate-800/40 p-8 rounded-2xl border border-slate-700/50 hover:bg-slate-800 hover:border-amber-500/30 transition duration-300 group">
-                    <div class="bg-slate-900 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition border border-slate-700 group-hover:border-amber-500/20 shadow-lg">
-                        <i data-lucide="sliders" class="text-amber-500 w-7 h-7"></i>
-                    </div>
-                    <h4 class="text-xl font-bold mb-3 group-hover:text-amber-400 transition">Simulador de Taxas</h4>
-                    <p class="text-slate-400 text-sm leading-relaxed">Configure taxas de 1x a 18x personalizadas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section id="depoimentos" class="py-24 bg-slate-950 relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 -z-10"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20">
-                <h2 class="text-sm font-bold text-amber-500 tracking-widest uppercase mb-3">Prova Social</h2>
-                <h3 class="text-3xl lg:text-4xl font-bold text-white">Histórias de Sucesso</h3>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 hover:shadow-2xl transition relative group">
-                    <i data-lucide="quote" class="text-slate-700 absolute top-6 right-6 w-12 h-12 opacity-50 group-hover:text-amber-900/50 group-hover:opacity-100 transition duration-500"></i>
-                    <div class="flex gap-1 text-amber-500 mb-6">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                    <p class="text-slate-300 italic mb-8 leading-relaxed">"Eu perdia muito dinheiro nas taxas da maquininha sem saber. Depois do app, meu lucro no fim do mês aumentou 30% só ajustando o preço."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg border border-slate-700">R</div>
-                        <div>
-                            <h4 class="font-bold text-white">Roberto Silva</h4>
-                            <p class="text-xs text-slate-500 font-medium">Marcenaria Silva & Filhos</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial 2 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 hover:shadow-2xl transition relative group">
-                    <i data-lucide="quote" class="text-slate-700 absolute top-6 right-6 w-12 h-12 opacity-50 group-hover:text-amber-900/50 group-hover:opacity-100 transition duration-500"></i>
-                    <div class="flex gap-1 text-amber-500 mb-6">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                    <p class="text-slate-300 italic mb-8 leading-relaxed">"O que eu mais gosto é a função de gerar o PDF na hora. Fecho o orçamento na frente do cliente e já envio no Zap. Muito profissional."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg border border-slate-700">C</div>
-                        <div>
-                            <h4 class="font-bold text-white">Carlos Mendes</h4>
-                            <p class="text-xs text-slate-500 font-medium">Móveis Planejados CM</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Testimonial 3 -->
-                <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-slate-700 hover:shadow-2xl transition relative group">
-                    <i data-lucide="quote" class="text-slate-700 absolute top-6 right-6 w-12 h-12 opacity-50 group-hover:text-amber-900/50 group-hover:opacity-100 transition duration-500"></i>
-                    <div class="flex gap-1 text-amber-500 mb-6">
-                        <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                    </div>
-                    <p class="text-slate-300 italic mb-8 leading-relaxed">"Finalmente entendi quanto custava minha hora. O módulo 'O Dono' abriu meus olhos. O software se pagou no primeiro projeto."</p>
-                    <div class="flex items-center gap-4">
-                        <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 font-bold text-lg border border-slate-700">J</div>
-                        <div>
-                            <h4 class="font-bold text-white">Juliana Costa</h4>
-                            <p class="text-xs text-slate-500 font-medium">Costa Design</p>
+                        <!-- O Gate (Formulário de Captura) -->
+                        <div class="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-[2px]">
+                            <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full border-2 border-brand-primary mx-4 transform scale-100 hover:scale-[1.01] transition">
+                                <div class="w-12 h-12 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-lock text-2xl text-brand-primary"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gray-900 mb-2">Relatório Bloqueado</h4>
+                                <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                                    Detectamos o erro no seu cálculo. Digite seu contato para liberar o <strong>Preço Corrigido</strong> e receber o acesso à correção.
+                                </p>
+                                <form id="leadForm" class="space-y-3">
+                                    <input type="text" id="leadName" placeholder="Seu Nome" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <input type="email" id="leadEmail" placeholder="Seu melhor E-mail" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <input type="tel" id="leadPhone" placeholder="WhatsApp (DDD + Número)" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <button type="submit" id="btnLead" class="w-full bg-brand-primary hover:bg-brand-accent text-white font-bold py-3 rounded transition shadow-md">
+                                        LIBERAR RESULTADO AGORA
+                                    </button>
+                                </form>
+                                <p class="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1"><i class="fas fa-shield-alt"></i> Seus dados estão seguros.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -379,126 +191,221 @@
         </div>
     </section>
 
-    <!-- PRICING -->
-    <section id="precos" class="py-24 bg-slate-900 border-t border-slate-800 relative overflow-hidden">
-        <!-- Glow effect -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-600/5 rounded-full filter blur-[100px] pointer-events-none"></div>
-
-        <div class="max-w-6xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-4xl font-bold text-white mb-6">Investimento Inteligente</h2>
-            <p class="text-xl text-slate-400 mb-16">
-                Escolha o plano ideal e comece a lucrar de verdade.
-            </p>
+    <!-- SALES LETTER / OFERTA -->
+    <section id="salesSection" class="hidden-section py-16 bg-slate-50">
+        <div class="max-w-5xl mx-auto px-4">
             
-            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- PLANO MENSAL -->
-                <div class="bg-slate-800/50 p-10 rounded-3xl border border-slate-700 hover:border-slate-600 transition flex flex-col relative group">
-                    <h3 class="text-2xl font-bold text-white mb-2">Mensal</h3>
-                    <p class="text-slate-400 mb-8 text-sm">Flexibilidade total</p>
-                    <div class="flex items-baseline justify-center gap-1 mb-8">
-                        <span class="text-sm text-slate-400 font-medium">R$</span>
-                        <span class="text-5xl font-extrabold text-white tracking-tight">14,90</span>
-                        <span class="text-slate-500 font-medium">/mês</span>
+            <!-- Resultado Final Revelado -->
+            <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl shadow-2xl mb-20 text-center border-4 border-brand-primary relative overflow-hidden fade-in">
+                <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10"></div>
+                <div class="relative z-10">
+                    <h2 class="text-xl md:text-2xl font-light text-slate-300 mb-4 uppercase tracking-widest">O Preço que você DEVERIA cobrar é:</h2>
+                    <div class="text-5xl md:text-7xl font-extrabold text-green-400 mb-6 tracking-tight" id="precoIdealFinal">R$ 0,00</div>
+                    <div class="bg-white/10 inline-block px-6 py-3 rounded-lg backdrop-blur-md">
+                        <p class="text-amber-400 font-bold text-lg" id="lucroRealFinal">Você estava perdendo R$ 0,00 neste projeto.</p>
                     </div>
-                    <ul class="text-left space-y-4 mb-8 flex-1 text-sm text-slate-300">
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Acesso completo ao App</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Multiplataforma (Web/PC)</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Suporte Prioritário</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Cancele quando quiser</li>
+                </div>
+            </div>
+
+            <!-- Copywriting -->
+            <div class="prose lg:prose-xl mx-auto text-gray-700 mb-20 px-4">
+                <h2 class="text-3xl font-bold text-brand-dark mb-6 text-center">Por que sua conta de padaria está errada?</h2>
+                <p>Você provavelmente somou os custos e colocou 30% em cima. Ou multiplicou o material por 3. <strong>Isso é suicídio financeiro.</strong></p>
+                
+                <div class="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-500 my-8 shadow-sm">
+                    <h3 class="font-bold text-yellow-800 text-xl mb-2"><i class="fas fa-lightbulb mr-2"></i> O Erro das 4.33 Semanas</h3>
+                    <p class="text-base">A maioria calcula o custo hora baseada em 4 semanas. Mas o ano tem 52 semanas. 52 divido por 12 meses dá <strong>4,33</strong>. Ao ignorar isso, você trabalha quase 1 mês de graça por ano sem perceber.</p>
+                </div>
+
+                <p>Além disso, quando você dá 10% de desconto ou parcela em 10x, a taxa não sai do seu lucro bruto, ela sai do seu <strong>Lucro Líquido</strong>. Nosso sistema faz o <strong>Cálculo Reverso</strong> para garantir que sobre no seu bolso exatamente o que você planejou.</p>
+            </div>
+
+            <!-- Pricing -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Garanta seu Lucro para Sempre</h2>
+                <p class="text-xl text-gray-600">Escolha como quer profissionalizar sua marcenaria hoje.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Plano Mensal -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-200 hover:border-brand-primary transition group">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Mensal</h3>
+                    <p class="text-gray-500 mb-6">Flexibilidade total.</p>
+                    <div class="flex items-baseline justify-center gap-1 mb-8">
+                        <span class="text-sm text-gray-500 font-bold">R$</span>
+                        <span class="text-5xl font-extrabold text-gray-900">14,90</span>
+                        <span class="text-gray-500">/mês</span>
+                    </div>
+                    <ul class="text-left space-y-4 mb-8 text-gray-600">
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Engenharia Reversa de Preço</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Cálculo de 4.33 Semanas</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Orçamentos em PDF</li>
                     </ul>
-                    <button onclick="comprar('monthly', 'Marcenaria PRO - Mensal', 14.90)" class="w-full bg-slate-700 hover:bg-slate-600 text-white text-lg font-bold px-6 py-4 rounded-xl transition shadow-lg border border-slate-600">
+                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 14.90)" class="w-full bg-gray-100 text-gray-800 font-bold py-4 rounded-xl hover:bg-gray-200 transition">
                         Assinar Agora
                     </button>
                 </div>
 
-                <!-- PLANO VITALÍCIO -->
-                <div class="bg-slate-800 p-10 rounded-3xl border-2 border-amber-600 flex flex-col relative overflow-hidden transform md:-translate-y-4 shadow-2xl shadow-amber-900/20">
-                    <div class="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-wide shadow-sm">Mais Vendido</div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Vitalício</h3>
-                    <p class="text-slate-400 mb-8 text-sm">Pague uma vez, use para sempre</p>
+                <!-- Plano Vitalício -->
+                <div class="bg-white p-8 rounded-3xl shadow-2xl border-2 border-brand-primary relative transform md:-translate-y-4">
+                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-wide shadow-sm">Mais Vendido</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Vitalício</h3>
+                    <p class="text-gray-500 mb-6">Pague uma vez, lucre para sempre.</p>
                     <div class="flex items-baseline justify-center gap-1 mb-8">
-                        <span class="text-sm text-slate-400 font-medium">R$</span>
-                        <span class="text-5xl font-extrabold text-white tracking-tight">149,90</span>
-                        <span class="text-slate-500 font-medium">/único</span>
+                        <span class="text-sm text-gray-500 font-bold">R$</span>
+                        <span class="text-5xl font-extrabold text-gray-900">149,90</span>
+                        <span class="text-gray-500">/único</span>
                     </div>
-                    <ul class="text-left space-y-4 mb-8 flex-1 text-sm text-slate-300">
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> <strong>Acesso Vitalício</strong> ao App</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Web, Windows, Mac e Linux</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Todas as atualizações futuras</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0"></i> Sem mensalidades nunca mais</li>
+                    <ul class="text-left space-y-4 mb-8 text-gray-700 font-medium">
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> <strong>Tudo do plano mensal</strong></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Acesso vitalício sem mensalidade</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Atualizações futuras inclusas</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-shield-alt text-brand-primary"></i> Garantia de 7 dias</li>
                     </ul>
-                    <button onclick="comprar('lifetime', 'Marcenaria PRO - Vitalício', 149.90)" class="w-full bg-amber-600 text-white text-lg font-bold px-6 py-4 rounded-xl shadow-lg shadow-amber-600/20 hover:bg-amber-500 transition transform hover:-translate-y-1 active:translate-y-0 flex items-center justify-center gap-2">
-                        Comprar Acesso Vitalício
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    <button onclick="iniciarPagamento('lifetime', 'Marcenaria PRO - Vitalício', 149.90)" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/30 text-lg animate-pulse">
+                        QUERO ACESSO VITALÍCIO
                     </button>
-                    <p class="text-xs text-slate-500 mt-4 font-medium">Economia de R$ 88,90 no primeiro ano.</p>
+                    <p class="text-xs text-gray-400 mt-4 text-center">Oferta limitada para o lote fundador.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-slate-950 text-slate-500 py-12 text-center border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-center gap-2 mb-6 opacity-80">
-                <i data-lucide="monitor" class="w-6 h-6 text-amber-600"></i>
-                <span class="text-xl font-bold text-slate-300">Marcenaria PRO</span>
-            </div>
-            <p class="text-sm">&copy; 2025 Marcenaria PRO. Todos os direitos reservados.</p>
+    <footer class="bg-brand-dark text-gray-500 py-12 mt-16 text-center border-t border-gray-800">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="mb-4">&copy; 2025 Marcenaria PRO. Todos os direitos reservados.</p>
+            <p class="text-xs text-gray-600">Não vendemos software, vendemos lucro no bolso.</p>
         </div>
     </footer>
 
-    <!-- LOGICA DE COMPRA -->
+    <!-- LOGIC SCRIPT -->
     <script>
-        // Inicializa ícones Lucide
-        lucide.createIcons();
-
-        // 1. Pega o userId da URL (vindo do App Flutter: site.com/?uid=123)
+        // URL do Backend (Cloud Function)
+        // ATENÇÃO: Substitua pela sua URL real se mudou
+        const FUNCTION_URL = "https://us-central1-marceneirocalc-db65f.cloudfunctions.net/createPreference";
+        
+        // Tenta pegar UID da URL se o usuário veio do App
         const params = new URLSearchParams(window.location.search);
-        const userId = params.get('uid');
+        const appUserId = params.get('uid');
 
-        // URL da Função Backend (Cole a sua aqui!)
-        const FUNCTION_URL = "https://createpreference-sf7zs343fa-uc.a.run.app";        
+        // Elementos do DOM
+        const calcForm = document.getElementById('calcForm');
+        const leadForm = document.getElementById('leadForm');
+        const resultadoLock = document.getElementById('resultadoLock');
+        const salesSection = document.getElementById('salesSection');
+        
+        // Estado global
+        let leadData = { name: '', email: '', phone: '' };
+        let resultadoCalculo = { precoIdeal: 0, prejuizo: 0 };
 
-        async function comprar(type, title, price) {
-            // Validação: Só permite comprar se vier do App (tem UID)
-            if (!userId) {
-                alert("Erro: Usuário não identificado.\n\nPor favor, abra esta página clicando no botão dentro do Aplicativo Marcenaria PRO para que possamos identificar sua conta.");
+        // 1. Lógica da Calculadora (Cálculo do "Susto")
+        calcForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const material = parseFloat(document.getElementById('materiais').value);
+            const horas = parseFloat(document.getElementById('horas').value);
+            const margemPercent = parseFloat(document.getElementById('margem').value);
+            const taxasPercent = parseFloat(document.getElementById('taxas').value);
+            const valorHora = parseFloat(document.getElementById('valorHora').value);
+
+            // Conta de Padaria (Errada)
+            const custoMaoObraSimples = horas * valorHora; 
+            const custoBase = material + custoMaoObraSimples;
+            const precoPadaria = custoBase * (1 + (margemPercent / 100));
+
+            // Conta Certa (Engenharia Reversa)
+            const totalDeducoesDecimal = (margemPercent + taxasPercent) / 100;
+            const fatorDivisor = 1 - totalDeducoesDecimal;
+            
+            let precoIdeal = 0;
+            if (fatorDivisor <= 0) {
+                alert("Taxas + Margem ultrapassam 100%. Ajuste os valores.");
                 return;
+            } else {
+                precoIdeal = custoBase / fatorDivisor;
             }
 
-            // Mostra Loading
-            document.getElementById('loading-overlay').classList.remove('hidden');
+            const diferenca = precoIdeal - precoPadaria;
+
+            // Salva resultados
+            resultadoCalculo.precoIdeal = precoIdeal;
+            resultadoCalculo.prejuizo = diferenca;
+
+            // Atualiza UI (Lock Screen)
+            document.getElementById('displayPrecoPadaria').innerText = formatMoney(precoPadaria);
+            document.getElementById('displayPrejuizo').innerText = formatMoney(diferenca);
+            
+            resultadoLock.style.display = 'block';
+            resultadoLock.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 2. Captura de Lead (Liberação do Resultado)
+        leadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnLead');
+            btn.innerText = "Analisando...";
+            btn.disabled = true;
+
+            // Salva dados do lead
+            leadData.name = document.getElementById('leadName').value;
+            leadData.email = document.getElementById('leadEmail').value;
+            leadData.phone = document.getElementById('leadPhone').value;
+
+            setTimeout(() => {
+                // Atualiza Sales Page com dados reais
+                document.getElementById('precoIdealFinal').innerText = formatMoney(resultadoCalculo.precoIdeal);
+                document.getElementById('lucroRealFinal').innerText = `Você estava deixando ${formatMoney(resultadoCalculo.prejuizo)} na mesa neste projeto.`;
+
+                // Mostra Vendas
+                resultadoLock.style.display = 'none';
+                salesSection.style.display = 'block';
+                salesSection.scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        });
+
+        // 3. Integração de Pagamento (Mercado Pago)
+        async function iniciarPagamento(type, title, price) {
+            // Usa os dados do formulário ou dados fake se o usuário pulou direto pra compra
+            const finalEmail = leadData.email || "cliente_sem_lead@email.com";
+            const finalName = leadData.name || "Cliente Site";
+
+            document.getElementById('payment-overlay').classList.remove('hidden');
 
             try {
-                // Chama a Cloud Function
                 const response = await fetch(FUNCTION_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        userId: userId,
+                        userId: appUserId, // Pode ser null (usuário novo)
                         type: type,
                         title: title,
-                        price: price
+                        price: price,
+                        // Dados capturados no formulário para criar a conta depois
+                        email: finalEmail,
+                        name: finalName,
+                        whatsapp: leadData.phone
                     })
                 });
 
                 const data = await response.json();
 
                 if (data.initPoint) {
-                    // Sucesso! Redireciona para o Mercado Pago
                     window.location.href = data.initPoint;
                 } else {
-                    throw new Error(data.error || "Erro desconhecido");
+                    alert("Erro ao gerar pagamento: " + (data.error || "Tente novamente."));
                 }
-
             } catch (error) {
                 console.error(error);
-                alert("Erro ao conectar com pagamento. Tente novamente.");
+                alert("Erro de conexão. Verifique sua internet.");
             } finally {
-                // Esconde Loading se der erro (se der certo, já redirecionou)
-                document.getElementById('loading-overlay').classList.add('hidden');
+                document.getElementById('payment-overlay').classList.add('hidden');
             }
+        }
+
+        function formatMoney(value) {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
     </script>
 </body>
