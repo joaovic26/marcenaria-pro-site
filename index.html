@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .blur-content { filter: blur(6px); user-select: none; pointer-events: none; }
+        .blur-content { filter: blur(8px); user-select: none; pointer-events: none; }
         .hidden-section { display: none; }
-        .fade-in { animation: fadeIn 0.8s ease-in-out; }
+        /* Animação suave para aparecer elementos */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Loading Overlay */
-        .loader { border-top-color: #d97706; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
-        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     <script>
         tailwind.config = {
@@ -24,10 +21,10 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#0f172a', // Slate 900
-                            primary: '#d97706', // Amber 600
-                            accent: '#b45309', // Amber 700
-                            light: '#f8fafc'
+                            dark: '#1a202c',
+                            primary: '#d97706', /* Amber 600 - Cor de madeira/obra */
+                            accent: '#b45309',
+                            light: '#f3f4f6'
                         }
                     }
                 }
@@ -35,50 +32,40 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 text-slate-800">
-
-    <!-- LOADING OVERLAY DO PAGAMENTO -->
-    <div id="payment-overlay" class="hidden fixed inset-0 bg-black/80 z-[60] flex items-center justify-center backdrop-blur-sm">
-        <div class="bg-white p-8 rounded-2xl flex flex-col items-center shadow-2xl">
-            <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-            <p class="font-bold text-lg text-slate-800">Conectando ao Mercado Pago...</p>
-            <p class="text-sm text-slate-500">Preparando seu acesso vitalício.</p>
-        </div>
-    </div>
+<body class="bg-gray-50 text-gray-800">
 
     <!-- HERO SECTION -->
     <header class="bg-brand-dark text-white py-16 px-4 relative overflow-hidden">
         <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block bg-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-6 shadow-lg shadow-amber-900/50">
+            <div class="inline-block bg-brand-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4">
                 Ferramenta de Diagnóstico Gratuito
             </div>
             <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
                 Você está Lucrando ou apenas <span class="text-brand-primary">Trocando Dinheiro</span>?
             </h1>
-            <p class="text-xl md:text-2xl text-slate-300 mb-8 font-light max-w-3xl mx-auto">
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 font-light">
                 A maioria dos marceneiros paga para trabalhar e não sabe. As taxas invisíveis e o "Erro das 4.33 Semanas" estão comendo sua margem.
             </p>
-            <p class="text-lg text-white mb-10 bg-white/10 inline-block px-6 py-3 rounded-xl backdrop-blur-sm border border-white/10">
-                Descubra em 2 minutos o <strong>Lucro Real</strong> do seu último orçamento.
+            <p class="text-lg text-white mb-10">
+                Descubra em 2 minutos o <strong>Lucro Real</strong> do seu último orçamento com nossa Engenharia Reversa.
             </p>
-            <a href="#calculadora" class="bg-brand-primary hover:bg-brand-accent text-white font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:scale-105 duration-200 text-lg inline-flex items-center gap-2">
-                <i class="fas fa-calculator"></i> Fazer Diagnóstico Agora
+            <a href="#calculadora" class="bg-brand-primary hover:bg-brand-accent text-white font-bold py-4 px-8 rounded-lg shadow-lg transform transition hover:scale-105 duration-200 text-lg">
+                <i class="fas fa-calculator mr-2"></i> Fazer Diagnóstico Agora
             </a>
         </div>
-        
-        <!-- Background Texture -->
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/10 rounded-full filter blur-[100px] pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full filter blur-[100px] pointer-events-none"></div>
+        <!-- Background pattern opacity -->
+        <div class="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-0"></div>
+        <div class="absolute top-0 left-0 w-full h-full z-0" style="background-image: url('https://images.unsplash.com/photo-1611269154421-4e27c41eb311?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; opacity: 0.2;"></div>
     </header>
 
-    <!-- CALCULADORA SECTION -->
-    <section id="calculadora" class="py-16 px-4 -mt-10 relative z-20">
+    <!-- CALCULADORA SECTION (CONCIERGE MVP) -->
+    <section id="calculadora" class="py-16 px-4">
         <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-            <div class="bg-gray-50 p-6 border-b border-gray-200">
+            <div class="bg-gray-100 p-6 border-b border-gray-200">
                 <h2 class="text-2xl font-bold text-gray-800 text-center">
-                    <i class="fas fa-search-dollar text-brand-primary mr-2"></i> Analisar Orçamento Recente
+                    <i class="fas fa-search-dollar text-brand-primary mr-2"></i> Analisar Orçamento
                 </h2>
-                <p class="text-center text-gray-500 text-sm mt-2">Insira dados reais de um projeto. Vamos revelar a verdade.</p>
+                <p class="text-center text-gray-600 text-sm mt-2">Insira dados reais de um projeto recente. Seus dados não serão salvos.</p>
             </div>
 
             <div class="p-8">
@@ -86,32 +73,31 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Inputs -->
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Custo Total de Materiais (R$)</label>
-                            <input type="number" id="materiais" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 2500" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Custo Total de Materiais (R$)</label>
+                            <input type="number" id="materiais" class="w-full px-4 py-3 rounded border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition" placeholder="Ex: 2500,00" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Horas Estimadas</label>
-                            <span class="text-xs text-gray-500 float-right font-normal">Produção + Instalação</span>
-                            <input type="number" id="horas" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 40" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Horas Estimadas (Produção + Instalação)</label>
+                            <input type="number" id="horas" class="w-full px-4 py-3 rounded border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition" placeholder="Ex: 40" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Margem de Lucro Desejada (%)</label>
-                            <input type="number" id="margem" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 30" value="30" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Sua Margem de Lucro Desejada (%)</label>
+                            <input type="number" id="margem" class="w-full px-4 py-3 rounded border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition" placeholder="Ex: 30" value="30" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Taxa da Maquininha/Imposto (%)</label>
-                            <input type="number" id="taxas" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" placeholder="Ex: 12 (para 10x)" value="10" required>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Taxa Média da Maquininha/Imposto (%)</label>
+                            <input type="number" id="taxas" class="w-full px-4 py-3 rounded border border-gray-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary outline-none transition" placeholder="Ex: 12 (para 10x)" value="12" required>
                         </div>
                     </div>
 
-                    <!-- Pergunta Chave -->
-                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
-                        <label class="block text-sm font-bold text-slate-800 mb-1">Quanto você acha que custa sua hora? (R$)</label>
-                        <p class="text-xs text-slate-500 mb-2">A média de mercado para uma oficina pequena é R$ 35,00 (considerando aluguel, luz, pro-labore).</p>
-                        <input type="number" id="valorHora" class="w-full px-4 py-3 rounded border border-slate-300 focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" value="35">
+                    <!-- Pergunta Chave para definir o Custo Hora (Simplificada para o MVP) -->
+                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                        <label class="block text-sm font-medium text-blue-800 mb-1">Quanto você acha que custa sua hora? (R$)</label>
+                        <p class="text-xs text-blue-600 mb-2">Se não souber, use a média de mercado (R$ 35,00)</p>
+                        <input type="number" id="valorHora" class="w-full px-4 py-3 rounded border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" value="35">
                     </div>
 
-                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-lg transform hover:-translate-y-1">
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg shadow-md transition duration-200 text-lg">
                         CALCULAR A VERDADE <i class="fas fa-arrow-right ml-2"></i>
                     </button>
                 </form>
@@ -119,70 +105,72 @@
         </div>
     </section>
 
-    <!-- RESULTADO PARCIAL + LOCK -->
-    <section id="resultadoLock" class="py-10 px-4 hidden-section fade-in bg-white">
+    <!-- RESULTADO PARCIAL + LOCK (O GATILHO) -->
+    <section id="resultadoLock" class="py-10 px-4 hidden-section fade-in">
         <div class="max-w-3xl mx-auto">
-            <!-- Alerta -->
-            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-r shadow-sm mb-8 flex items-start gap-4">
-                <i class="fas fa-exclamation-triangle text-red-500 text-2xl mt-1"></i>
-                <div>
-                    <h3 class="text-lg font-bold text-red-800">Alerta Financeiro Detectado</h3>
-                    <p class="text-red-700 mt-1 text-sm">Seus custos invisíveis estão maiores do que o previsto. Você corre risco de pagar para trabalhar neste projeto.</p>
+            <!-- Alerta de Perigo -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded shadow-md mb-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-red-800">Alerta Financeiro Detectado</h3>
+                        <p class="text-red-700 mt-1">Seus custos invisíveis estão maiores do que o previsto. Você está correndo risco neste projeto.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Card de Resultados -->
-            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 relative overflow-hidden">
+            <!-- Card de Resultados (Com Blur) -->
+            <div class="bg-white rounded-xl shadow-xl border border-gray-200 relative overflow-hidden">
                 <div class="p-6 md:p-8">
-                    <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-4">Análise Preliminar</h3>
+                    <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-2">Análise Preliminar do Projeto</h3>
                     
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
-                            <p class="text-xs text-gray-500 font-bold uppercase">Preço "Conta de Padaria"</p>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="p-4 bg-gray-50 rounded">
+                            <p class="text-sm text-gray-500">Preço Sugerido (Conta de Padaria)</p>
                             <p class="text-2xl font-bold text-gray-800" id="displayPrecoPadaria">R$ 0,00</p>
                         </div>
-                        <div class="p-4 bg-red-50 rounded-xl border border-red-100">
-                            <p class="text-xs text-red-600 font-bold uppercase">Dinheiro Deixado na Mesa</p>
+                        <div class="p-4 bg-red-50 rounded border border-red-100">
+                            <p class="text-sm text-red-600 font-bold">Prejuízo Estimado / Dinheiro na Mesa</p>
                             <p class="text-2xl font-bold text-red-600" id="displayPrejuizo">R$ 0,00</p>
                         </div>
                     </div>
 
                     <!-- Área Borrada -->
-                    <div class="relative mt-4">
-                        <div class="blur-content space-y-4 p-4 bg-gray-50 rounded-xl">
-                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                    <div class="relative mt-8">
+                        <div class="blur-content space-y-4">
+                            <div class="flex justify-between items-center border-b py-2">
                                 <span class="text-gray-600">Custo Real (Taxas + 4.33)</span>
                                 <span class="font-mono font-bold">R$ 4.250,00</span>
                             </div>
-                            <div class="flex justify-between items-center border-b border-gray-200 py-2">
-                                <span class="text-gray-600">Preço Mínimo (Break-even)</span>
+                            <div class="flex justify-between items-center border-b py-2">
+                                <span class="text-gray-600">Preço Mínimo para não ter prejuízo</span>
                                 <span class="font-mono font-bold">R$ 5.800,00</span>
                             </div>
-                            <div class="flex justify-between items-center py-2 bg-green-100 p-2 rounded">
-                                <span class="text-green-800 font-bold">PREÇO IDEAL (CORRIGIDO)</span>
-                                <span class="font-mono font-bold text-green-800 text-xl">R$ 6.950,00</span>
+                            <div class="flex justify-between items-center py-2 bg-green-50 p-2 rounded">
+                                <span class="text-green-800 font-bold">PREÇO DE VENDA IDEAL (CORRIGIDO)</span>
+                                <span class="font-mono font-bold text-green-700 text-xl">R$ 6.950,00</span>
                             </div>
                         </div>
 
                         <!-- O Gate (Formulário de Captura) -->
-                        <div class="absolute inset-0 flex items-center justify-center z-10 backdrop-blur-[2px]">
-                            <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-md w-full border-2 border-brand-primary mx-4 transform scale-100 hover:scale-[1.01] transition">
-                                <div class="w-12 h-12 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <i class="fas fa-lock text-2xl text-brand-primary"></i>
-                                </div>
+                        <div class="absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/95 p-6 md:p-8 rounded-xl shadow-2xl text-center max-w-md w-full border border-brand-primary">
+                                <i class="fas fa-lock text-4xl text-brand-primary mb-4"></i>
                                 <h4 class="text-xl font-bold text-gray-900 mb-2">Relatório Bloqueado</h4>
-                                <p class="text-gray-600 mb-6 text-sm leading-relaxed">
-                                    Detectamos o erro no seu cálculo. Digite seu contato para liberar o <strong>Preço Corrigido</strong> e receber o acesso à correção.
+                                <p class="text-gray-600 mb-6 text-sm">
+                                    Detectamos onde o dinheiro está vazando. Digite seu contato para liberar o <strong>Preço Corrigido</strong> e receber a explicação da lógica "4.33".
                                 </p>
                                 <form id="leadForm" class="space-y-3">
-                                    <input type="text" id="leadName" placeholder="Seu Nome" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
-                                    <input type="email" id="leadEmail" placeholder="Seu melhor E-mail" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
-                                    <input type="tel" id="leadPhone" placeholder="WhatsApp (DDD + Número)" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
-                                    <button type="submit" id="btnLead" class="w-full bg-brand-primary hover:bg-brand-accent text-white font-bold py-3 rounded transition shadow-md">
+                                    <input type="text" placeholder="Seu Nome" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <input type="email" placeholder="Seu melhor E-mail" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <input type="tel" placeholder="WhatsApp (DDD + Número)" class="w-full px-4 py-3 rounded border border-gray-300 focus:ring-1 focus:ring-brand-primary outline-none" required>
+                                    <button type="submit" class="w-full bg-brand-primary hover:bg-brand-accent text-white font-bold py-3 rounded transition shadow-lg">
                                         LIBERAR RESULTADO AGORA
                                     </button>
                                 </form>
-                                <p class="text-xs text-gray-400 mt-4 flex items-center justify-center gap-1"><i class="fas fa-shield-alt"></i> Seus dados estão seguros.</p>
+                                <p class="text-xs text-gray-400 mt-3"><i class="fas fa-shield-alt"></i> Seus dados estão 100% seguros.</p>
                             </div>
                         </div>
                     </div>
@@ -191,197 +179,142 @@
         </div>
     </section>
 
-    <!-- SALES LETTER / OFERTA -->
-    <section id="salesSection" class="hidden-section py-16 bg-slate-50">
-        <div class="max-w-5xl mx-auto px-4">
+    <!-- SALES LETTER / OFERTA (Inicialmente oculta, aparece após captura) -->
+    <section id="salesSection" class="hidden-section py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
             
             <!-- Resultado Final Revelado -->
-            <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl shadow-2xl mb-20 text-center border-4 border-brand-primary relative overflow-hidden fade-in">
-                <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-10"></div>
-                <div class="relative z-10">
-                    <h2 class="text-xl md:text-2xl font-light text-slate-300 mb-4 uppercase tracking-widest">O Preço que você DEVERIA cobrar é:</h2>
-                    <div class="text-5xl md:text-7xl font-extrabold text-green-400 mb-6 tracking-tight" id="precoIdealFinal">R$ 0,00</div>
-                    <div class="bg-white/10 inline-block px-6 py-3 rounded-lg backdrop-blur-md">
-                        <p class="text-amber-400 font-bold text-lg" id="lucroRealFinal">Você estava perdendo R$ 0,00 neste projeto.</p>
-                    </div>
-                </div>
+            <div class="bg-gray-900 text-white p-8 rounded-xl shadow-2xl mb-16 text-center transform -translate-y-10 border-4 border-green-500">
+                <h2 class="text-2xl font-light text-gray-300 mb-2">O Preço que você DEVERIA cobrar é:</h2>
+                <div class="text-5xl md:text-7xl font-bold text-green-400 mb-4" id="precoIdealFinal">R$ 0,00</div>
+                <p class="text-orange-300 font-bold" id="lucroRealFinal">Você estava perdendo R$ 0,00 neste projeto.</p>
             </div>
 
-            <!-- Copywriting -->
-            <div class="prose lg:prose-xl mx-auto text-gray-700 mb-20 px-4">
-                <h2 class="text-3xl font-bold text-brand-dark mb-6 text-center">Por que sua conta de padaria está errada?</h2>
-                <p>Você provavelmente somou os custos e colocou 30% em cima. Ou multiplicou o material por 3. <strong>Isso é suicídio financeiro.</strong></p>
+            <!-- A Explicação (Copywriting) -->
+            <div class="prose lg:prose-xl mx-auto text-gray-700 mb-16">
+                <h2 class="text-3xl font-bold text-brand-dark mb-6">Por que sua conta de padaria está errada?</h2>
+                <p>Você provavelmente multiplicou o material por 2 ou 3, ou somou seus custos e colocou 30% em cima. <strong>Isso é suicídio financeiro.</strong></p>
                 
-                <div class="bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-500 my-8 shadow-sm">
-                    <h3 class="font-bold text-yellow-800 text-xl mb-2"><i class="fas fa-lightbulb mr-2"></i> O Erro das 4.33 Semanas</h3>
-                    <p class="text-base">A maioria calcula o custo hora baseada em 4 semanas. Mas o ano tem 52 semanas. 52 divido por 12 meses dá <strong>4,33</strong>. Ao ignorar isso, você trabalha quase 1 mês de graça por ano sem perceber.</p>
+                <div class="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-500 my-6">
+                    <h3 class="font-bold text-yellow-800 text-lg">O Erro das 4.33 Semanas</h3>
+                    <p class="text-sm mt-2">A maioria calcula o custo hora baseada em 4 semanas. Mas o ano tem 52 semanas. 52 divido por 12 meses dá <strong>4,33</strong>. Ao ignorar isso, você trabalha 1 mês de graça por ano.</p>
                 </div>
 
-                <p>Além disso, quando você dá 10% de desconto ou parcela em 10x, a taxa não sai do seu lucro bruto, ela sai do seu <strong>Lucro Líquido</strong>. Nosso sistema faz o <strong>Cálculo Reverso</strong> para garantir que sobre no seu bolso exatamente o que você planejou.</p>
+                <p>Além disso, quando você dá 10% de desconto ou parcela em 10x, a taxa não sai do seu lucro bruto, ela sai do seu <strong>Lucro Líquido</strong>. Nosso sistema faz o cálculo reverso para garantir que sobre exatamente o que você planejou.</p>
             </div>
 
-            <!-- Pricing -->
+            <!-- Pricing (Ancoragem e Oferta) -->
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Garanta seu Lucro para Sempre</h2>
-                <p class="text-xl text-gray-600">Escolha como quer profissionalizar sua marcenaria hoje.</p>
+                <p class="text-xl text-gray-600">Escolha como quer profissionalizar sua marcenaria</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <!-- Plano Mensal -->
-                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-200 hover:border-brand-primary transition group">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Mensal</h3>
-                    <p class="text-gray-500 mb-6">Flexibilidade total.</p>
-                    <div class="flex items-baseline justify-center gap-1 mb-8">
-                        <span class="text-sm text-gray-500 font-bold">R$</span>
-                        <span class="text-5xl font-extrabold text-gray-900">14,90</span>
-                        <span class="text-gray-500">/mês</span>
-                    </div>
-                    <ul class="text-left space-y-4 mb-8 text-gray-600">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Engenharia Reversa de Preço</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Cálculo de 4.33 Semanas</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Orçamentos em PDF</li>
+                <!-- Plano Mensal (Âncora) -->
+                <div class="border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition text-center">
+                    <h3 class="text-xl font-bold text-gray-600 mb-4">Assinatura Mensal</h3>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">R$ 49,90<span class="text-lg font-normal text-gray-500">/mês</span></div>
+                    <p class="text-gray-500 mb-8">Flexibilidade total. Cancele quando quiser.</p>
+                    <ul class="text-left space-y-3 mb-8 text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Engenharia Reversa de Preço</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Cálculo de 4.33 Semanas</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Orçamentos em PDF</li>
                     </ul>
-                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 14.90)" class="w-full bg-gray-100 text-gray-800 font-bold py-4 rounded-xl hover:bg-gray-200 transition">
-                        Assinar Agora
-                    </button>
+                    <button class="w-full bg-gray-800 text-white font-bold py-3 rounded hover:bg-gray-700 transition">Assinar Mensal</button>
                 </div>
 
-                <!-- Plano Vitalício -->
-                <div class="bg-white p-8 rounded-3xl shadow-2xl border-2 border-brand-primary relative transform md:-translate-y-4">
-                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-wide shadow-sm">Mais Vendido</div>
-                    <h3 class="text-2xl font-bold text-brand-dark mb-2">Vitalício</h3>
-                    <p class="text-gray-500 mb-6">Pague uma vez, lucre para sempre.</p>
-                    <div class="flex items-baseline justify-center gap-1 mb-8">
-                        <span class="text-sm text-gray-500 font-bold">R$</span>
-                        <span class="text-5xl font-extrabold text-gray-900">149,90</span>
-                        <span class="text-gray-500">/único</span>
+                <!-- Plano Vitalício (No-Brainer) -->
+                <div class="border-2 border-brand-primary rounded-2xl p-8 shadow-xl relative bg-white transform md:-translate-y-4">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-brand-primary text-white px-4 py-1 rounded-full text-sm font-bold uppercase">
+                        Melhor Oferta
                     </div>
-                    <ul class="text-left space-y-4 mb-8 text-gray-700 font-medium">
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> <strong>Tudo do plano mensal</strong></li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Acesso vitalício sem mensalidade</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Atualizações futuras inclusas</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-shield-alt text-brand-primary"></i> Garantia de 7 dias</li>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">Acesso Vitalício</h3>
+                    <div class="text-gray-400 line-through text-lg">De R$ 997,00</div>
+                    <div class="text-5xl font-bold text-brand-primary mb-2">R$ 197,00</div>
+                    <p class="text-gray-500 mb-8 font-medium">Pagamento Único. Sem mensalidades.</p>
+                    <ul class="text-left space-y-3 mb-8 text-gray-700">
+                        <li><i class="fas fa-check-circle text-brand-primary mr-2"></i> <strong>Tudo do plano mensal</strong></li>
+                        <li><i class="fas fa-check-circle text-brand-primary mr-2"></i> Acesso para sempre</li>
+                        <li><i class="fas fa-check-circle text-brand-primary mr-2"></i> Atualizações futuras inclusas</li>
+                        <li><i class="fas fa-shield-alt text-brand-primary mr-2"></i> Garantia de 7 dias</li>
                     </ul>
-                    <button onclick="iniciarPagamento('lifetime', 'Marcenaria PRO - Vitalício', 149.90)" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 transition shadow-lg shadow-green-600/30 text-lg animate-pulse">
+                    <button class="w-full bg-green-600 text-white font-bold py-4 rounded hover:bg-green-700 transition shadow-lg text-lg animate-pulse">
                         QUERO ACESSO VITALÍCIO
                     </button>
-                    <p class="text-xs text-gray-400 mt-4 text-center">Oferta limitada para o lote fundador.</p>
+                    <p class="text-xs text-gray-400 mt-4">Oferta limitada para o lote fundador.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-brand-dark text-gray-500 py-12 mt-16 text-center border-t border-gray-800">
-        <div class="max-w-4xl mx-auto px-4">
-            <p class="mb-4">&copy; 2025 Marcenaria PRO. Todos os direitos reservados.</p>
-            <p class="text-xs text-gray-600">Não vendemos software, vendemos lucro no bolso.</p>
+    <footer class="bg-gray-100 py-12 mt-16 border-t border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2024 Marcenaria PRO. Todos os direitos reservados.</p>
+            <p class="text-gray-400 text-xs mt-2">Não vendemos software, vendemos lucro.</p>
         </div>
     </footer>
 
-    <!-- LOGIC SCRIPT -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- LOGICA DE COMPRA E CAPTURA -->
     <script>
-        // URL do Backend (Cloud Function)
-        const FUNCTION_URL = "https://createpreference-sf7zs343fa-uc.a.run.app";
+        lucide.createIcons();
+
+        // URL da Função Backend
+        const FUNCTION_URL = "https://us-central1-marceneirocalc-db65f.cloudfunctions.net/createPreference";
         
-        // Tenta pegar UID da URL se o usuário veio do App
         const params = new URLSearchParams(window.location.search);
-        const appUserId = params.get('uid');
+        const appUserId = params.get('uid'); // Pode vir nulo
 
-        // Elementos do DOM
-        const calcForm = document.getElementById('calcForm');
-        const leadForm = document.getElementById('leadForm');
-        const resultadoLock = document.getElementById('resultadoLock');
-        const salesSection = document.getElementById('salesSection');
-        
-        // Estado global
+        // Estado do formulário de captura
         let leadData = { name: '', email: '', phone: '' };
-        let resultadoCalculo = { precoIdeal: 0, prejuizo: 0 };
 
-        // 1. Lógica da Calculadora (Cálculo do "Susto")
-        calcForm.addEventListener('submit', function(e) {
+        // Lógica do Formulário de Captura (Lead)
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const material = parseFloat(document.getElementById('materiais').value);
-            const horas = parseFloat(document.getElementById('horas').value);
-            const margemPercent = parseFloat(document.getElementById('margem').value);
-            const taxasPercent = parseFloat(document.getElementById('taxas').value);
-            const valorHora = parseFloat(document.getElementById('valorHora').value);
-
-            // Conta de Padaria (Errada)
-            const custoMaoObraSimples = horas * valorHora; 
-            const custoBase = material + custoMaoObraSimples;
-            const precoPadaria = custoBase * (1 + (margemPercent / 100));
-
-            // Conta Certa (Engenharia Reversa)
-            const totalDeducoesDecimal = (margemPercent + taxasPercent) / 100;
-            const fatorDivisor = 1 - totalDeducoesDecimal;
-            
-            let precoIdeal = 0;
-            if (fatorDivisor <= 0) {
-                alert("Taxas + Margem ultrapassam 100%. Ajuste os valores.");
-                return;
-            } else {
-                precoIdeal = custoBase / fatorDivisor;
-            }
-
-            const diferenca = precoIdeal - precoPadaria;
-
-            // Salva resultados
-            resultadoCalculo.precoIdeal = precoIdeal;
-            resultadoCalculo.prejuizo = diferenca;
-
-            // Atualiza UI (Lock Screen)
-            document.getElementById('displayPrecoPadaria').innerText = formatMoney(precoPadaria);
-            document.getElementById('displayPrejuizo').innerText = formatMoney(diferenca);
-            
-            resultadoLock.style.display = 'block';
-            resultadoLock.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // 2. Captura de Lead (Liberação do Resultado)
-        leadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const btn = document.getElementById('btnLead');
-            btn.innerText = "Analisando...";
-            btn.disabled = true;
-
-            // Salva dados do lead
+            // Salva os dados para usar no pagamento depois
             leadData.name = document.getElementById('leadName').value;
             leadData.email = document.getElementById('leadEmail').value;
             leadData.phone = document.getElementById('leadPhone').value;
-
-            setTimeout(() => {
-                // Atualiza Sales Page com dados reais
-                document.getElementById('precoIdealFinal').innerText = formatMoney(resultadoCalculo.precoIdeal);
-                document.getElementById('lucroRealFinal').innerText = `Você estava deixando ${formatMoney(resultadoCalculo.prejuizo)} na mesa neste projeto.`;
-
-                // Mostra Vendas
-                resultadoLock.style.display = 'none';
-                salesSection.style.display = 'block';
-                salesSection.scrollIntoView({ behavior: 'smooth' });
-            }, 1000);
+            
+            // ... resto da lógica de mostrar o resultado (mantém a visual) ...
+            // (Aqui você só destrava a tela, não muda nada na lógica de compra ainda)
+             const btn = document.getElementById('btnLead');
+             btn.innerText = "Liberado!";
+             setTimeout(() => {
+                document.getElementById('resultadoLock').style.display = 'none';
+                document.getElementById('salesSection').style.display = 'block';
+                document.getElementById('salesSection').scrollIntoView({ behavior: 'smooth' });
+             }, 500);
         });
 
-        // 3. Integração de Pagamento (Mercado Pago)
+        // Lógica do Botão de Compra
         async function iniciarPagamento(type, title, price) {
-            // Usa os dados do formulário ou dados fake se o usuário pulou direto pra compra
-            const finalEmail = leadData.email || "cliente_sem_lead@email.com";
-            const finalName = leadData.name || "Cliente Site";
-
             document.getElementById('payment-overlay').classList.remove('hidden');
+
+            // Se o usuário não veio do App, usamos os dados que ele preencheu no formulário
+            // Se ele nem preencheu o formulário (foi direto), pedimos email pelo prompt (fallback simples)
+            let finalEmail = leadData.email;
+            let finalName = leadData.name;
+
+            if (!appUserId && !finalEmail) {
+                finalEmail = prompt("Por favor, digite seu e-mail para receber o acesso:");
+                if (!finalEmail) {
+                    document.getElementById('payment-overlay').classList.add('hidden');
+                    return;
+                }
+            }
 
             try {
                 const response = await fetch(FUNCTION_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        userId: appUserId, // Pode ser null (usuário novo)
+                        userId: appUserId, // Se tiver, ótimo. Se não, é null.
                         type: type,
                         title: title,
                         price: price,
-                        // Dados capturados no formulário para criar a conta depois
+                        // Dados para criar a conta automática
                         email: finalEmail,
                         name: finalName,
                         whatsapp: leadData.phone
@@ -393,19 +326,31 @@
                 if (data.initPoint) {
                     window.location.href = data.initPoint;
                 } else {
-                    alert("Erro ao gerar pagamento: " + (data.error || "Tente novamente."));
+                    alert("Erro: " + (data.error || "Tente novamente."));
                 }
             } catch (error) {
                 console.error(error);
-                alert("Erro de conexão. Verifique sua internet.");
+                alert("Erro de conexão.");
             } finally {
                 document.getElementById('payment-overlay').classList.add('hidden');
             }
         }
-
-        function formatMoney(value) {
-            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
