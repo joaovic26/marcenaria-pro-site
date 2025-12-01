@@ -42,9 +42,46 @@
         <div class="bg-white p-8 rounded-2xl flex flex-col items-center shadow-2xl">
             <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
             <p class="font-bold text-lg text-slate-800">Conectando ao Mercado Pago...</p>
-            <p class="text-sm text-slate-500">Preparando seu acesso vitalício.</p>
+            <p class="text-sm text-slate-500">Preparando seu acesso.</p>
         </div>
     </div>
+
+    <!-- NAV -->
+    <nav class="fixed w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <div class="bg-brand-primary/20 p-2 rounded-xl border border-brand-primary/20">
+                        <i data-lucide="monitor" class="text-brand-primary w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-white">Marcenaria<span class="text-brand-primary">PRO</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#funcionalidades" class="text-slate-400 hover:text-white font-medium transition duration-200">Funcionalidades</a>
+                    <a href="#como-funciona" class="text-slate-400 hover:text-white font-medium transition duration-200">A Lógica</a>
+                    <a href="#depoimentos" class="text-slate-400 hover:text-white font-medium transition duration-200">Depoimentos</a>
+                    <a href="#precos" class="bg-brand-primary text-white px-6 py-2.5 rounded-lg font-bold shadow-lg shadow-amber-600/20 hover:bg-brand-accent hover:scale-105 transition transform">
+                        Acessar Agora
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-slate-400 hover:text-white focus:outline-none">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 p-4 space-y-4 shadow-xl">
+            <a href="#funcionalidades" class="block text-slate-400 font-medium hover:text-brand-primary">Funcionalidades</a>
+            <a href="#como-funciona" class="block text-slate-400 font-medium hover:text-brand-primary">A Lógica</a>
+            <a href="#precos" class="block w-full bg-brand-primary text-white px-6 py-3 rounded-lg font-bold text-center">Acessar Agora</a>
+        </div>
+    </nav>
 
     <!-- HERO SECTION -->
     <header class="bg-brand-dark text-white py-16 px-4 relative overflow-hidden">
@@ -217,7 +254,7 @@
                     <p class="text-base">A maioria calcula o custo hora baseada em 4 semanas. Mas o ano tem 52 semanas. 52 divido por 12 meses dá <strong>4,33</strong>. Ao ignorar isso, você trabalha quase 1 mês de graça por ano sem perceber.</p>
                 </div>
 
-                <p>Além disso, quando você dá 10% de desconto ou parcela em 10x, a taxa não sai do seu lucro bruto, ela sai do seu <strong>Lucro Líquido</strong>. Nosso sistema faz o <strong>Cálculo Reverso</strong> para garantir que sobre no seu bolso exatamente o que você planejou.</p>
+                <p>Além disso, quando você dá 10% de desconto ou parcela em 10x, a taxa não sai do seu lucro bruto, ela sai do seu <strong>Lucro Líquido</strong>. Nosso sistema faz o <strong>Cálculo Reverso</strong> para garantir que sobre no bolso exatamente o que você planejou.</p>
             </div>
 
             <!-- Pricing -->
@@ -241,8 +278,8 @@
                         <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Cálculo de 4.33 Semanas</li>
                         <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Orçamentos em PDF</li>
                     </ul>
-                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 49.90)" class="w-full bg-gray-100 text-gray-800 font-bold py-4 rounded-xl hover:bg-gray-200 transition">
-                        Assinar Agora
+                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 49.90)" class="w-full bg-gray-800 text-white font-bold py-4 rounded-xl hover:bg-gray-700 transition">
+                        Assinar Mensal
                     </button>
                 </div>
 
@@ -367,9 +404,9 @@
         // 3. Integração de Pagamento (Mercado Pago)
         async function iniciarPagamento(type, title, price) {
             // Usa os dados do formulário ou dados fake se o usuário pulou direto pra compra
-            const finalEmail = leadData.email || "cliente_sem_lead@email.com";
+            const finalEmail = leadData.email || "cliente_site@email.com";
             const finalName = leadData.name || "Cliente Site";
-
+            
             document.getElementById('payment-overlay').classList.remove('hidden');
 
             try {
@@ -377,11 +414,11 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        userId: appUserId, // Pode ser null (usuário novo)
+                        userId: appUserId, // Se tiver, ótimo. Se não, é null.
                         type: type,
                         title: title,
                         price: price,
-                        // Dados capturados no formulário para criar a conta depois
+                        // Dados para criar a conta automática
                         email: finalEmail,
                         name: finalName,
                         whatsapp: leadData.phone
