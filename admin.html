@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sala de Guerra | Marcenaria PRO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; }
+        .card-lead { transition: all 0.2s; }
+        .card-lead:active { transform: scale(0.98); }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- LOGIN SCREEN (SIMPLES) -->
+    <div id="loginScreen" class="fixed inset-0 bg-slate-900 z-50 flex flex-col items-center justify-center p-4">
+        <div class="w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-amber-600/20">
+            <i class="fas fa-shield-alt text-3xl text-white"></i>
+        </div>
+        <h1 class="text-2xl font-bold mb-2">Acesso Restrito</h1>
+        <p class="text-slate-400 mb-8 text-center">Área exclusiva do comando.</p>
+        <input type="password" id="adminPass" class="w-full max-w-xs bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-center text-white text-lg tracking-widest mb-4 focus:border-amber-500 outline-none transition" placeholder="Senha de Acesso">
+        <button onclick="checkLogin()" class="w-full max-w-xs bg-amber-600 hover:bg-amber-700 text-white font-bold py-4 rounded-xl shadow-lg transition">ENTRAR NA SALA DE GUERRA</button>
+    </div>
+
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full bg-slate-900/90 backdrop-blur border-b border-slate-800 z-40 px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            <h1 class="font-bold text-lg tracking-tight">Leads<span class="text-amber-500">PRO</span></h1>
+        </div>
+        <button onclick="carregarLeads()" class="w-8 h-8 flex items-center justify-center bg-slate-800 rounded-full hover:bg-slate-700">
+            <i class="fas fa-sync-alt text-xs text-slate-400"></i>
+        </button>
+    </header>
+
+    <!-- METRICS -->
+    <div class="pt-20 px-4 mb-6 grid grid-cols-2 gap-4">
+        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+            <p class="text-slate-400 text-xs uppercase font-bold">Novos (Hoje)</p>
+            <p class="text-2xl font-black text-white" id="countNovos">0</p>
+        </div>
+        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+            <p class="text-slate-400 text-xs uppercase font-bold">Total Pendente</p>
+            <p class="text-2xl font-black text-amber-500" id="countPendente">0</p>
+        </div>
+    </div>
+
+    <!-- LEADS LIST -->
+    <div id="leadsList" class="px-4 space-y-4">
+        <!-- O JS vai preencher aqui -->
+        <div class="text-center py-10 text-slate-500">
+            <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+            <p>Carregando inteligência...</p>
+        </div>
+    </div>
+
+    <!-- LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // *** MESMA CONFIGURAÇÃO DO SEU SITE ***
+        const firebaseConfig = {
+            apiKey: "AIzaSyA9Uz4JY1MnelOsIePuNzoDs8LkfE66H6w",
+            authDomain: "marceneirocalc-db65f.firebaseapp.com",
+            projectId: "marceneirocalc-db65f",
+            storageBucket: "marceneirocalc-db65f.firebasestorage.app",
+            messagingSenderId: "883617070316",
+            appId: "1:883617070316:web:1d93a273fa381bc2d879c9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // SENHA SIMPLES (Para MVP)
+        window.checkLogin = function() {
+            const pass = document.getElementById('adminPass').value;
+            // Senha definida como 'admin123' - Mude se quiser
+            if(pass === 'MarcenariaPRO@123_321') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                localStorage.setItem('adminAuth', 'true');
+                carregarLeads();
+            } else {
+                alert('Acesso Negado.');
+            }
+        }
+
+        // Verifica se já logou antes
+        if(localStorage.getItem('adminAuth') === 'true') {
+            document.getElementById('loginScreen').classList.add('hidden');
+            carregarLeads();
+        }
+
+        // --- FUNÇÃO CORE: Carregar Leads ---
+        window.carregarLeads = async function() {
+            const listEl = document.getElementById('leadsList');
+            listEl.innerHTML = '<div class="text-center py-10 text-slate-500"><i class="fas fa-spinner fa-spin text-2xl mb-2"></i><p>Buscando alvos...</p></div>';
+
+            try {
+                // Busca leads ordenados por data (mais recente primeiro)
+                const q = query(collection(db, "leads_landing_page"), orderBy("data_acesso", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                let html = '';
+                let novos = 0;
+                let pendentes = 0;
+
+                if (querySnapshot.empty) {
+                    listEl.innerHTML = '<div class="text-center py-10 text-slate-500"><p>Nenhum lead encontrado ainda.</p></div>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const lead = docSnap.data();
+                    const id = docSnap.id;
+                    
+                    // Contadores
+                    if(lead.status === 'novo') pendentes++;
+                    // Simulação de "hoje" (simplificada)
+                    if(lead.data_acesso && isToday(lead.data_acesso.toDate())) novos++;
+
+                    // Formatações
+                    const prejuizo = lead.prejuizo_calculado ? parseFloat(lead.prejuizo_calculado).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}) : 'R$ 0,00';
+                    const dataFormatada = lead.data_acesso ? lead.data_acesso.toDate().toLocaleString('pt-BR') : 'Sem data';
+                    
+                    // Status Visual
+                    const isContacted = lead.status === 'contatado';
+                    const statusClass = isContacted ? 'border-green-900/30 bg-green-900/10 opacity-70' : 'border-amber-500/50 bg-slate-800';
+                    const statusIcon = isContacted ? '<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded"><i class="fas fa-check mr-1"></i> Contatado</span>' : '<span class="text-amber-500 text-xs font-bold bg-amber-500/10 px-2 py-1 rounded animate-pulse"><i class="fas fa-fire mr-1"></i> Quente</span>';
+
+                    // Script de Vendas (WhatsApp)
+                    // Mensagem: "Oi [Nome], vi que você fez uma simulação e descobriu um prejuízo de [Valor]..."
+                    const msg = `Oi ${lead.name.split(' ')[0]}! Sou da Marcenaria PRO. Vi aqui no sistema que você simulou um prejuízo oculto de *${prejuizo}* no seu último orçamento. 😱 \n\nQueria te ajudar a corrigir isso pra não perder mais dinheiro. Tem um minuto?`;
+                    const linkZap = `https://wa.me/55${limparTelefone(lead.phone)}?text=${encodeURIComponent(msg)}`;
+
+                    html += `
+                    <div class="card-lead relative p-5 rounded-2xl border ${statusClass} shadow-xl mb-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <h3 class="font-bold text-lg text-white">${lead.name || 'Sem Nome'}</h3>
+                                <p class="text-xs text-slate-400">${dataFormatada}</p>
+                            </div>
+                            ${statusIcon}
+                        </div>
+                        
+                        <div class="bg-slate-900/50 p-3 rounded-lg mb-4 border border-slate-700/50">
+                            <p class="text-xs text-slate-400 uppercase font-bold">Dor Identificada (Prejuízo)</p>
+                            <p class="text-xl font-bold text-red-400">${prejuizo}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                             <a href="tel:${lead.phone}" class="flex items-center justify-center py-3 rounded-xl bg-slate-700 text-white font-bold text-sm hover:bg-slate-600 transition">
+                                <i class="fas fa-phone mr-2"></i> Ligar
+                            </a>
+                            <button onclick="abrirWhatsApp('${id}', '${linkZap}')" class="flex items-center justify-center py-3 rounded-xl bg-green-600 text-white font-bold text-sm hover:bg-green-700 transition shadow-lg shadow-green-900/20">
+                                <i class="fab fa-whatsapp mr-2 text-lg"></i> Chamar
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                });
+
+                listEl.innerHTML = html;
+                document.getElementById('countNovos').innerText = novos;
+                document.getElementById('countPendente').innerText = pendentes;
+
+            } catch (error) {
+                console.error(error);
+                listEl.innerHTML = '<p class="text-red-500 text-center">Erro ao carregar leads. Verifique o console.</p>';
+            }
+        }
+
+        // --- AÇÃO: Abrir WhatsApp e Marcar como Contatado ---
+        window.abrirWhatsApp = async function(docId, link) {
+            // 1. Abre o WhatsApp imediatamente
+            window.open(link, '_blank');
+
+            // 2. Atualiza no banco que foi contatado (Sem travar a UI)
+            try {
+                const leadRef = doc(db, "leads_landing_page", docId);
+                await updateDoc(leadRef, {
+                    status: "contatado",
+                    data_contato: new Date()
+                });
+                // Recarrega a lista para mostrar o verde
+                carregarLeads(); 
+            } catch (e) {
+                console.error("Erro ao atualizar status", e);
+            }
+        }
+
+        // Helpers
+        function limparTelefone(phone) {
+            return phone.replace(/\D/g,'');
+        }
+
+        function isToday(date) {
+            const today = new Date();
+            return date.getDate() == today.getDate() &&
+                date.getMonth() == today.getMonth() &&
+                date.getFullYear() == today.getFullYear();
+        }
+    </script>
+</body>
+</html>
