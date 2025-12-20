@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Marcenaria PRO | O Fim do Prejuízo na Marcenaria</title>
-    <meta name="description" content="Pare de pagar para trabalhar. O único sistema que corrige o erro das 4.33 semanas e blinda seu lucro contra taxas.">
+    <title>Marcenaria PRO | Seu CFO Digital de Bolso</title>
+    <meta name="description" content="Sistema de Inteligência Financeira para Marcenarias. Pare de pagar para trabalhar. Gestão, Precificação e Lucro Real.">
     
     <!-- Scripts & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -27,6 +27,30 @@
         .btn-gradient { background: linear-gradient(90deg, #d97706 0%, #b45309 100%); }
         .btn-gradient:hover { background: linear-gradient(90deg, #b45309 0%, #92400e 100%); }
 
+        /* Mockup Placeholder */
+        .mockup-placeholder {
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: bold;
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .mockup-placeholder::after {
+            content: '📸 COLAR PRINT AQUI';
+            position: absolute;
+        }
+        .mockup-img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
         /* Prevenir Zoom no iOS em inputs */
         input, select, textarea { font-size: 16px !important; }
     </style>
@@ -43,7 +67,7 @@
                         }
                     },
                     screens: {
-                        'xs': '375px', // Breakpoint extra para celulares pequenos
+                        'xs': '375px', 
                     }
                 }
             }
@@ -93,7 +117,7 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (HOOK) -->
     <header class="bg-brand-dark text-white pt-24 md:pt-32 pb-16 md:pb-24 px-4 relative overflow-hidden">
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="inline-flex items-center gap-2 bg-brand-primary/20 border border-brand-primary/30 px-3 py-1 md:px-4 md:py-1.5 rounded-full text-brand-primary text-[10px] md:text-xs font-bold uppercase tracking-wide mb-6 md:mb-8">
@@ -106,12 +130,12 @@
             </h1>
             
             <p class="text-base md:text-2xl text-slate-400 mb-8 md:mb-10 font-light max-w-2xl mx-auto leading-relaxed px-2">
-                92% das marcenarias pequenas quebram por causa das <strong>Taxas Invisíveis</strong> e do <strong>Erro das 4.33 Semanas</strong>.
+                O único sistema que transforma sua marcenaria em uma empresa previsível. Sem achismos. Sem prejuízo oculto.
             </p>
 
             <div class="flex flex-col items-center px-4">
                 <a href="#calculadora" class="w-full md:w-auto btn-gradient text-white font-bold py-4 md:py-5 px-6 md:px-10 rounded-xl shadow-xl shadow-amber-900/40 transform transition active:scale-95 duration-200 text-base md:text-lg inline-flex justify-center items-center gap-3 border-b-4 border-amber-800">
-                    <i class="fas fa-calculator"></i> CALCULAR MEU PREJUÍZO
+                    <i class="fas fa-calculator"></i> CALCULAR MEU CUSTO REAL
                 </a>
                 <p class="mt-4 text-[10px] md:text-xs text-slate-500 uppercase tracking-widest opacity-80">Sem cadastro • Resultado imediato</p>
             </div>
@@ -127,7 +151,7 @@
                 <h2 class="text-xl md:text-2xl font-bold text-gray-900">
                     <i class="fas fa-search-dollar text-brand-primary mr-2"></i> Raio-X do Orçamento
                 </h2>
-                <p class="text-xs md:text-base text-gray-500 mt-2">Pegue o último orçamento que você enviou.</p>
+                <p class="text-xs md:text-base text-gray-500 mt-2">Vamos ver se a matemática do seu último projeto fecha.</p>
             </div>
 
             <div class="p-6 md:p-10">
@@ -193,11 +217,11 @@
                     <div class="bg-red-100 p-2 md:p-3 rounded-full shrink-0">
                         <i class="fas fa-exclamation-triangle text-red-600 text-xl md:text-3xl"></i>
                     </div>
-                    <h3 class="text-lg md:text-xl font-bold text-red-800 md:hidden">ALERTA: Prejuízo</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-red-800 md:hidden">ALERTA: Risco Financeiro</h3>
                 </div>
                 <div>
-                    <h3 class="hidden md:block text-xl font-bold text-red-800 mb-1">ALERTA: Prejuízo Silencioso Detectado</h3>
-                    <p class="text-red-700 text-sm md:text-base leading-snug">Os números indicam que você pagou para trabalhar. As taxas comeram seu lucro líquido real.</p>
+                    <h3 class="hidden md:block text-xl font-bold text-red-800 mb-1">ALERTA: Sua margem está em perigo</h3>
+                    <p class="text-red-700 text-sm md:text-base leading-snug">Seu método atual não blinda seu lucro contra impostos e taxas. Você pode estar pagando para trabalhar.</p>
                 </div>
             </div>
 
@@ -232,9 +256,9 @@
                             <i class="fas fa-lock text-2xl md:text-3xl text-brand-primary"></i>
                         </div>
                         
-                        <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 md:mb-3">Relatório Bloqueado</h4>
+                        <h4 class="text-xl md:text-2xl font-bold text-gray-900 mb-2 md:mb-3">Desbloquear Correção</h4>
                         <p class="text-sm md:text-base text-gray-600 mb-6 leading-relaxed">
-                            Calculamos o <strong>Preço Exato</strong> para ter lucro real. Libere o resultado gratuitamente.
+                            Nossa Inteligência Financeira calculou o <strong>Preço Exato</strong>. Veja onde está o erro.
                         </p>
                         
                         <form id="leadForm" class="space-y-3 md:space-y-4">
@@ -243,112 +267,222 @@
                             <input type="tel" id="leadPhone" placeholder="WhatsApp (DDD + Número)" class="w-full px-4 py-3 md:px-5 md:py-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 outline-none transition" required inputmode="tel">
                             
                             <button type="submit" id="btnLead" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 md:py-4 rounded-xl shadow-lg shadow-green-600/20 transition transform active:scale-95 text-base md:text-lg">
-                                VER RESULTADO AGORA
+                                VER CORREÇÃO E ANÁLISE COMPLETA
                             </button>
                         </form>
                         
-                        <p class="text-[10px] md:text-xs text-gray-400 mt-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> Mais de 1.200 marceneiros já usaram.</p>
+                        <p class="text-[10px] md:text-xs text-gray-400 mt-4"><i class="fas fa-check-circle text-green-500 mr-1"></i> Ambiente seguro e livre de spam.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SALES LETTER / OFERTA -->
-    <section id="salesSection" class="hidden-section py-12 md:py-20 bg-slate-50">
-        <div class="max-w-5xl mx-auto px-4">
-            
-            <div class="bg-slate-900 text-white p-6 md:p-16 rounded-2xl md:rounded-[2rem] shadow-2xl mb-12 md:mb-24 text-center relative overflow-hidden fade-in border-4 border-brand-primary/20">
-                <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-primary via-gray-900 to-black"></div>
+    <!-- NEW SALES LETTER (THE STACK & CFO DIGITAL) -->
+    <section id="salesSection" class="hidden-section pb-20 bg-slate-50">
+        
+        <!-- 1. The Result Reveal -->
+        <div class="bg-slate-900 text-white pt-20 pb-32 px-4 rounded-b-[3rem] shadow-2xl relative overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <p class="text-brand-primary font-bold tracking-widest uppercase mb-4 text-xs md:text-sm">Matemática Ajustada</p>
+                <h2 class="text-xl md:text-4xl font-light text-slate-300 mb-6 md:mb-8">Para garantir sua margem, o preço mínimo é:</h2>
                 
-                <div class="relative z-10">
-                    <p class="text-brand-primary font-bold tracking-widest uppercase mb-4 text-xs md:text-sm">Correção Aplicada</p>
-                    <h2 class="text-xl md:text-4xl font-light text-slate-300 mb-6 md:mb-8">O Preço que garante o seu Lucro é:</h2>
-                    
-                    <div class="inline-block bg-white/5 backdrop-blur-lg px-4 py-4 md:px-8 md:py-6 rounded-xl md:rounded-2xl border border-white/10 mb-6 md:mb-8 w-full md:w-auto">
-                        <div class="text-4xl md:text-7xl font-black text-green-400 tracking-tight break-all" id="precoIdealFinal">R$ 0,00</div>
+                <div class="inline-block bg-white/5 backdrop-blur-lg px-8 py-6 rounded-2xl border border-white/10 mb-8 transform hover:scale-105 transition duration-300 cursor-default shadow-lg shadow-green-900/20">
+                    <div class="text-4xl md:text-7xl font-black text-green-400 tracking-tight" id="precoIdealFinal">R$ 0,00</div>
+                </div>
+                
+                <div class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/20 p-4 rounded-xl backdrop-blur-sm">
+                    <p class="text-red-300 font-medium text-sm md:text-lg leading-snug" id="lucroRealFinal">Você estava pagando para trabalhar.</p>
+                </div>
+
+                <div class="mt-12 animate-bounce">
+                    <i class="fas fa-chevron-down text-slate-500 text-2xl"></i>
+                </div>
+            </div>
+            <!-- Background effects -->
+            <div class="absolute top-0 left-0 w-full h-full opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-primary via-slate-900 to-black"></div>
+        </div>
+
+        <!-- 2. The Bridge (Pivot to CFO Digital) -->
+        <div class="max-w-5xl mx-auto px-4 -mt-20 relative z-20">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-xl border border-gray-100 text-center">
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Você acabou de corrigir UM orçamento.</h3>
+                <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Mas e amanhã? E o mês que vem? <br>
+                    A calculadora acima é apenas uma "Aspirina". <strong>O Marcenaria PRO é a cura completa para a saúde da sua empresa.</strong>
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                        <i class="fas fa-brain text-blue-600 text-2xl mb-3"></i>
+                        <h4 class="font-bold text-blue-900">Inteligência Financeira</h4>
+                        <p class="text-sm text-blue-700 mt-2">Saiba exatamente quanto custa sua hora e seu custo fixo real.</p>
                     </div>
-                    
-                    <div class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/20 p-3 md:p-4 rounded-xl">
-                        <p class="text-red-300 font-medium text-sm md:text-lg leading-snug" id="lucroRealFinal">Você estava pagando para trabalhar.</p>
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100">
+                        <i class="fas fa-tasks text-amber-600 text-2xl mb-3"></i>
+                        <h4 class="font-bold text-amber-900">Gestão de Produção</h4>
+                        <p class="text-sm text-amber-700 mt-2">Pipeline visual. Nunca mais perca o prazo ou status de um pedido.</p>
+                    </div>
+                    <div class="bg-green-50 p-6 rounded-2xl border border-green-100">
+                        <i class="fas fa-chart-line text-green-600 text-2xl mb-3"></i>
+                        <h4 class="font-bold text-green-900">Lucro Líquido Real</h4>
+                        <p class="text-sm text-green-700 mt-2">Dashboard executivo que separa faturamento (vaidade) de lucro (realidade).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. The Features (Showcase) -->
+        <div class="max-w-6xl mx-auto px-4 mt-20 md:mt-32 space-y-24">
+            
+            <!-- Feature 1: Dashboard -->
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="inline-block bg-brand-primary/10 text-brand-primary font-bold px-3 py-1 rounded-full text-xs uppercase">Visão de Águia</div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Seu Dashboard Executivo</h3>
+                    <p class="text-lg text-slate-600">Pare de gerir sua marcenaria no escuro. Veja em tempo real quanto entrou, quanto saiu e quanto <strong>realmente sobrou</strong> no seu bolso.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Separação Faturamento x Lucro</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Gráficos visuais e simples</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Metas mensais claras</li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <!-- ÁREA PARA O PRINT DO DASHBOARD -->
+                    <div class="mockup-placeholder aspect-video shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
+                        <!-- Substitua o src abaixo pelo seu print -->
+                        <img src="https://placehold.co/600x400/png" alt="Dashboard Marcenaria PRO" class="mockup-img">
                     </div>
                 </div>
             </div>
 
-            <!-- Pricing Table -->
+            <!-- Feature 2: Pipeline -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-10">
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="inline-block bg-blue-100 text-blue-600 font-bold px-3 py-1 rounded-full text-xs uppercase">Controle Total</div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">Pipeline de Produção</h3>
+                    <p class="text-lg text-slate-600">Do orçamento à entrega. Saiba exatamente em qual etapa está cada projeto e elimine os atrasos que queimam seu filme com o cliente.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Kanban visual (Arrasta e Solta)</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Status: Orçamento, Produção, Entregue</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Histórico de clientes</li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <!-- ÁREA PARA O PRINT DO PIPELINE -->
+                    <div class="mockup-placeholder aspect-video shadow-2xl transform -rotate-1 hover:rotate-0 transition duration-500">
+                         <!-- Substitua o src abaixo pelo seu print -->
+                        <img src="https://placehold.co/600x400/png" alt="Pipeline de Projetos" class="mockup-img">
+                    </div>
+                </div>
+            </div>
+
+             <!-- Feature 3: Financeiro -->
+             <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="w-full md:w-1/2 space-y-6">
+                    <div class="inline-block bg-green-100 text-green-600 font-bold px-3 py-1 rounded-full text-xs uppercase">Blindagem de Lucro</div>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900">O Fim das Taxas Invisíveis</h3>
+                    <p class="text-lg text-slate-600">Nosso algoritmo de <strong>Engenharia Reversa</strong> calcula o imposto e a taxa da maquininha para que o cliente pague por eles, não você.</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Cálculo automático de impostos</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Correção das 4.33 semanas</li>
+                        <li class="flex items-center gap-3 text-slate-700"><i class="fas fa-check text-green-500"></i> Custo-hora atualizado automaticamente</li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <!-- ÁREA PARA O PRINT DO FINANCEIRO -->
+                    <div class="mockup-placeholder aspect-video shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
+                         <!-- Substitua o src abaixo pelo seu print -->
+                        <img src="https://placehold.co/600x400/png" alt="Financeiro Blindado" class="mockup-img">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pricing Table (The Offer) -->
+        <div class="mt-24 md:mt-32 px-4">
             <div class="text-center mb-10 md:mb-16">
-                <h2 class="text-2xl md:text-5xl font-bold text-slate-900 mb-4 md:mb-6">Blinde seu Caixa Hoje</h2>
-                <p class="text-base md:text-xl text-gray-600 max-w-2xl mx-auto">Escolha o plano que vai profissionalizar sua gestão.</p>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-4 md:mb-6">Escolha o Controle Profissional</h2>
+                <p class="text-base md:text-xl text-gray-600 max-w-2xl mx-auto">Um sistema completo de gestão pelo preço de uma formica.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto relative">
                 
                 <!-- Plano Mensal -->
-                <div class="bg-white p-6 md:p-10 rounded-2xl md:rounded-[2rem] shadow-xl border border-gray-200 flex flex-col order-2 md:order-1">
+                <div class="bg-white p-6 md:p-10 rounded-2xl md:rounded-[2rem] shadow-xl border border-gray-200 flex flex-col order-2 md:order-1 transition hover:shadow-2xl">
                     <div class="mb-6 md:mb-8">
                         <h3 class="text-xl md:text-2xl font-bold text-gray-800">Assinatura Mensal</h3>
-                        <p class="text-sm md:text-base text-gray-500 mt-2">Para quem prefere flexibilidade.</p>
+                        <p class="text-sm md:text-base text-gray-500 mt-2">Flexibilidade total para sua marcenaria.</p>
                     </div>
                     <div class="flex items-baseline gap-1 mb-6 md:mb-8">
                         <span class="text-xs md:text-sm text-gray-500 font-bold">R$</span>
                         <span class="text-4xl md:text-5xl font-bold text-gray-900">49,90</span>
                         <span class="text-gray-500">/mês</span>
                     </div>
+                    <!-- Updated Stack -->
                     <ul class="space-y-3 md:space-y-4 mb-8 md:mb-10 flex-1 text-gray-600 text-sm md:text-base">
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Engenharia Reversa de Taxas</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Fator 4.33 Automático</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check text-green-500"></i> Orçamentos em PDF</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-brand-primary"></i> <strong>Dashboard Executivo</strong></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-brand-primary"></i> Pipeline de Produção</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-brand-primary"></i> Engenharia Reversa de Taxas</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-brand-primary"></i> Emissão de Orçamentos PDF</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check text-brand-primary"></i> Gestão de Clientes</li>
                     </ul>
-                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 49.90)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold py-3.5 md:py-4 rounded-xl transition">
+                    <button onclick="iniciarPagamento('monthly', 'Marcenaria PRO - Mensal', 49.90)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold py-3.5 md:py-4 rounded-xl transition border border-slate-200">
                         Escolher Mensal
                     </button>
                 </div>
 
                 <!-- Plano Fundador -->
                 <div class="bg-slate-900 text-white p-6 md:p-10 rounded-2xl md:rounded-[2rem] shadow-2xl border-4 border-brand-primary relative overflow-hidden transform md:-translate-y-6 flex flex-col order-1 md:order-2">
-                    <div class="absolute top-4 right-0 md:top-6 bg-brand-primary text-white text-[10px] md:text-xs font-bold px-3 md:px-4 py-1 md:py-1.5 uppercase tracking-wide shadow-lg transform translate-x-2">
-                        Oferta Encerra em Breve
+                    <div class="absolute top-4 right-0 md:top-6 bg-brand-primary text-white text-[10px] md:text-xs font-bold px-3 md:px-4 py-1 md:py-1.5 uppercase tracking-wide shadow-lg transform translate-x-2 animate-pulse">
+                        LOTE FUNDADOR
                     </div>
 
                     <div class="mb-6 md:mb-8 mt-2">
                         <h3 class="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
-                            <i class="fas fa-crown text-brand-primary"></i> Lote Fundador
+                            <i class="fas fa-crown text-brand-primary"></i> Acesso Vitalício
                         </h3>
-                        <p class="text-slate-400 mt-2 text-sm md:text-base">Acesso Vitalício. Pague uma única vez.</p>
+                        <p class="text-slate-400 mt-2 text-sm md:text-base">Compre uma vez. Use para sempre.</p>
                     </div>
                     
                     <div class="flex items-baseline gap-2 mb-2">
                         <span class="text-sm text-slate-400 font-bold">R$</span>
-                        <span class="text-5xl md:text-6xl font-black text-white">149,90</span>
+                        <span class="text-5xl md:text-6xl font-black text-white">197,00</span>
                         <span class="text-slate-400 font-bold text-sm">único</span>
                     </div>
-                    <p class="text-xs md:text-sm text-red-400 font-bold mb-6 md:mb-8 line-through">Preço Normal: R$ 497,00/ano</p>
+                    <p class="text-xs md:text-sm text-brand-primary/80 font-bold mb-6 md:mb-8">Economia de R$ 400,00/ano</p>
 
+                    <!-- The Full Stack -->
                     <ul class="space-y-3 md:space-y-4 mb-8 md:mb-10 flex-1 text-slate-300 font-medium text-sm md:text-base">
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> <strong>Acesso Vitalício (Sem mensalidade)</strong></li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Todos os recursos liberados</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Suporte prioritário via WhatsApp</li>
-                        <li class="flex items-center gap-3"><i class="fas fa-shield-alt text-brand-primary"></i> Garantia incondicional de 7 dias</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-star text-yellow-400"></i> <strong>SEM MENSALIDADE (Vitalício)</strong></li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Dashboard + Pipeline + Financeiro</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Almoxarifado Inteligente (Bônus)</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-check-circle text-brand-primary"></i> Suporte Prioritário WhatsApp</li>
+                        <li class="flex items-center gap-3"><i class="fas fa-shield-alt text-brand-primary"></i> Garantia de 7 Dias</li>
                     </ul>
 
-                    <button onclick="iniciarPagamento('lifetime', 'Marcenaria PRO - Vitalício', 149.90)" class="w-full btn-gradient text-white font-bold py-4 md:py-5 rounded-xl shadow-lg shadow-amber-600/30 text-lg md:text-xl hover:shadow-amber-600/50 transition transform active:scale-95 hover:-translate-y-1">
-                        QUERO SER FUNDADOR
+                    <button onclick="iniciarPagamento('lifetime', 'Marcenaria PRO - Vitalício', 197.00)" class="w-full btn-gradient text-white font-bold py-4 md:py-5 rounded-xl shadow-lg shadow-amber-600/30 text-lg md:text-xl hover:shadow-amber-600/50 transition transform active:scale-95 hover:-translate-y-1 border-b-4 border-amber-900">
+                        GARANTIR VITALÍCIO AGORA
                     </button>
-                    <p class="text-center text-[10px] md:text-xs text-slate-500 mt-4">⚠️ Apenas 14 licenças restantes neste preço.</p>
+                    <p class="text-center text-[10px] md:text-xs text-slate-500 mt-4">⚠️ O preço vai subir para R$ 297 em breve.</p>
                 </div>
             </div>
 
             <!-- FAQ -->
-            <div class="max-w-3xl mx-auto mt-16 md:mt-24">
-                <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8">Dúvidas Frequentes</h3>
+            <div class="max-w-3xl mx-auto mt-16 md:mt-24 pb-12">
+                <h3 class="text-xl md:text-2xl font-bold text-center mb-6 md:mb-8 text-slate-900">Perguntas Frequentes</h3>
                 <div class="space-y-4">
                     <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="font-bold text-base md:text-lg mb-2">Funciona no celular?</h4>
-                        <p class="text-sm md:text-base text-gray-600">Sim! O sistema roda direto no navegador do seu celular, tablet ou computador. Não precisa instalar nada pesado.</p>
+                        <h4 class="font-bold text-base md:text-lg mb-2 text-slate-800">Serve para quem é CPF?</h4>
+                        <p class="text-sm md:text-base text-gray-600">Com certeza. O sistema permite configurar como Pessoa Física ou Jurídica, ajustando os impostos automaticamente para sua realidade.</p>
                     </div>
                     <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h4 class="font-bold text-base md:text-lg mb-2">E se eu não gostar?</h4>
-                        <p class="text-sm md:text-base text-gray-600">Você tem 7 dias de garantia. Se achar que o sistema não te ajudou a lucrar, devolvemos 100% do seu dinheiro. Risco zero.</p>
+                        <h4 class="font-bold text-base md:text-lg mb-2 text-slate-800">Funciona no Celular?</h4>
+                        <p class="text-sm md:text-base text-gray-600">Sim! O Marcenaria PRO é 100% online e responsivo. Você pode fazer orçamentos direto na casa do cliente usando seu smartphone.</p>
+                    </div>
+                    <div class="bg-white p-5 md:p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h4 class="font-bold text-base md:text-lg mb-2 text-slate-800">Consigo testar?</h4>
+                        <p class="text-sm md:text-base text-gray-600">Você tem 7 dias de garantia incondicional. Se comprar e achar que não serve para você, devolvemos 100% do seu dinheiro. O risco é todo nosso.</p>
                     </div>
                 </div>
             </div>
@@ -357,25 +491,28 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-500 py-12 md:py-16 mt-12 md:mt-20 border-t border-slate-800">
+    <footer class="bg-slate-900 text-slate-500 py-12 md:py-16 mt-0 border-t border-slate-800">
         <div class="max-w-4xl mx-auto px-4 text-center">
             <div class="flex items-center justify-center gap-2 mb-6">
                 <i class="fas fa-hammer text-brand-primary"></i>
                 <span class="text-lg md:text-xl font-bold text-white">Marcenaria<span class="text-brand-primary">PRO</span></span>
             </div>
-            <p class="mb-6 max-w-md mx-auto text-sm md:text-base">Feito para marceneiros que cansaram de enriquecer o banco e empobrecer a família.</p>
+            <p class="mb-6 max-w-md mx-auto text-sm md:text-base">Transformando marcenarias em indústrias lucrativas através da inteligência financeira.</p>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="text-slate-400 hover:text-white transition"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="text-slate-400 hover:text-white transition"><i class="fab fa-whatsapp text-2xl"></i></a>
+            </div>
             <p class="text-xs md:text-sm text-slate-600">&copy; 2025 Marcenaria PRO. Todos os direitos reservados.</p>
         </div>
     </footer>
 
-    <!-- LOGIC SCRIPT (MÓDULO COM FIREBASE) -->
+    <!-- LOGIC SCRIPT (MANTIDO IDÊNTICO PARA FUNCIONAR) -->
     <script type="module">
         // --- 1. CONFIGURAÇÃO DO FIREBASE (COPIE DO SEU CONSOLE) ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // *** SUBSTITUA AQUI PELAS SUAS CHAVES ***
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
         apiKey: "AIzaSyA9Uz4JY1MnelOsIePuNzoDs8LkfE66H6w",
         authDomain: "marceneirocalc-db65f.firebaseapp.com",
@@ -456,7 +593,7 @@
             
             const btn = document.getElementById('btnLead');
             const originalText = btn.innerText;
-            btn.innerText = "Processando...";
+            btn.innerText = "Calculando e Gerando Análise...";
             btn.disabled = true;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
@@ -475,12 +612,11 @@
                         preco_ideal: resultadoCalculo.precoIdeal,
                         data_acesso: serverTimestamp(),
                         status: "novo", // Para seu controle de vendas
-                        origem: "calculadora_v1"
+                        origem: "calculadora_v2_cfo"
                     });
                     console.log("Lead salvo no Firestore!");
                 } catch (error) {
                     console.error("Erro ao salvar lead:", error);
-                    // Não impede o usuário de ver o resultado se der erro no banco
                 }
             } else {
                 console.warn("Firebase não configurado. Lead não salvo.");
@@ -502,7 +638,7 @@
             }, 500);
         });
 
-        // Integração de Pagamento (Exportada para Window para funcionar com onclick no HTML)
+        // Integração de Pagamento
         window.iniciarPagamento = async function(type, title, price) {
             const finalEmail = leadData.email || "visitante@marcenariapro.com";
             const finalName = leadData.name || "Visitante";
