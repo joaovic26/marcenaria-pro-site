@@ -27,7 +27,7 @@
         .btn-gradient { background: linear-gradient(90deg, #d97706 0%, #b45309 100%); }
         .btn-gradient:hover { background: linear-gradient(90deg, #b45309 0%, #92400e 100%); }
 
-        /* Mockup Placeholder */
+        /* Mockup Placeholder - Ajustado para Vertical */
         .mockup-placeholder {
             background-color: #e2e8f0;
             display: flex;
@@ -35,20 +35,28 @@
             justify-content: center;
             color: #64748b;
             font-weight: bold;
-            border: 2px dashed #cbd5e1;
-            border-radius: 0.75rem;
             position: relative;
             overflow: hidden;
+            /* Estilo de celular */
+            border-radius: 2rem; 
+            border: 8px solid #1e293b; /* Borda escura simulando celular */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        .mockup-placeholder::after {
-            content: '📸 COLAR PRINT AQUI';
+        /* Comentado o texto placeholder para não sobrepor a imagem se ela falhar no carregamento rápido, 
+           mas mantido no CSS caso queira reativar */
+        /* .mockup-placeholder::after {
+            content: '📸 720x1600';
             position: absolute;
-        }
+            font-size: 1.2rem;
+            color: #94a3b8;
+            z-index: 0;
+        } */
         .mockup-img {
             width: 100%;
-            height: auto;
-            border-radius: 0.75rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 10;
         }
 
         /* Prevenir Zoom no iOS em inputs */
@@ -347,10 +355,10 @@
                     </ul>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <!-- ÁREA PARA O PRINT DO DASHBOARD -->
-                    <div class="mockup-placeholder aspect-video shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
+                    <!-- ÁREA PARA O PRINT DO DASHBOARD (VERTICAL) -->
+                    <div class="mockup-placeholder aspect-[9/20] max-w-[300px] mx-auto shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
                         <!-- Substitua o src abaixo pelo seu print -->
-                        <img src="https://placehold.co/600x400/png" alt="Dashboard Marcenaria PRO" class="mockup-img">
+                        <img src="dasboard.png" alt="Dashboard Marcenaria PRO" class="mockup-img">
                     </div>
                 </div>
             </div>
@@ -368,10 +376,10 @@
                     </ul>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <!-- ÁREA PARA O PRINT DO PIPELINE -->
-                    <div class="mockup-placeholder aspect-video shadow-2xl transform -rotate-1 hover:rotate-0 transition duration-500">
+                    <!-- ÁREA PARA O PRINT DO PIPELINE (VERTICAL) -->
+                    <div class="mockup-placeholder aspect-[9/20] max-w-[300px] mx-auto shadow-2xl transform -rotate-1 hover:rotate-0 transition duration-500">
                          <!-- Substitua o src abaixo pelo seu print -->
-                        <img src="https://placehold.co/600x400/png" alt="Pipeline de Projetos" class="mockup-img">
+                        <img src="projects.png" alt="Pipeline de Projetos" class="mockup-img">
                     </div>
                 </div>
             </div>
@@ -389,10 +397,10 @@
                     </ul>
                 </div>
                 <div class="w-full md:w-1/2">
-                    <!-- ÁREA PARA O PRINT DO FINANCEIRO -->
-                    <div class="mockup-placeholder aspect-video shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
+                    <!-- ÁREA PARA O PRINT DO FINANCEIRO (VERTICAL) -->
+                    <div class="mockup-placeholder aspect-[9/20] max-w-[300px] mx-auto shadow-2xl transform rotate-1 hover:rotate-0 transition duration-500">
                          <!-- Substitua o src abaixo pelo seu print -->
-                        <img src="https://placehold.co/600x400/png" alt="Financeiro Blindado" class="mockup-img">
+                        <img src="calc.png" alt="Financeiro Blindado" class="mockup-img">
                     </div>
                 </div>
             </div>
